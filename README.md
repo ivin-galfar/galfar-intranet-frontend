@@ -1,3 +1,5 @@
+# 🏗️galfar-intranet-frontend
+
 # 🏗️ galfar-scm
 
 galfar-scm is a supply chain management web application designed for **tracking**, **managing**, and **optimizing** supply chain processes in construction and industrial projects.  
