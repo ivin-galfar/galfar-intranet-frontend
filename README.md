@@ -39,8 +39,7 @@ This project features a **⚛️ React frontend** styled with **🎨 Tailwind CS
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/ivin-austan/millow.git
-   cd millow
+   git clone https://github.com/ivin-galfar/galfar-intranet-frontend.git
    ```
    
 2. Install Dependencies:
@@ -50,23 +49,10 @@ This project features a **⚛️ React frontend** styled with **🎨 Tailwind CS
    ```
 3. Run in Development Mode:
 
-   - To start both **frontend** and **backend** simultaneously using `concurrently`:
+     - To start the **frontend**:
 
      ```bash
-     npm start (from root)
+     npm run dev (from root)
      ```
-
-   - Alternatively, you can run them manually in separate terminals:
-
-     Terminal 1 – Backend
-     ```bash
-     cd backend
-     npm run dev
-     ```
-
-     Terminal 2 – Frontend
-     ```bash
-     cd frontend
-     npm run dev
      ```
 
