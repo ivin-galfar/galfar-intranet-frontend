@@ -70,7 +70,7 @@ export default function VerticalTable({ showcalc }) {
           : prev
       );
     }
-  }, [particular.length]);
+  }, [particular]);
   const rawData = [
     { id: 1, company: "" },
     { id: 2, company: "" },
@@ -304,7 +304,7 @@ export default function VerticalTable({ showcalc }) {
     selectedmr === null ||
     sharedTableData.formData?.status == "review"
       ? ""
-      : vendorInfoWithTotal.length > 0,
+      : vendorInfoWithTotal,
   ]);
   const vendorVATs = useMemo(() => {
     if (

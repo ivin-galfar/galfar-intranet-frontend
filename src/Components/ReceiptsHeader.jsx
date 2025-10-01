@@ -166,10 +166,12 @@ const TableHeader = ({ isAdmin }) => {
         fetchReceipt(mrnumber);
         setIsMRSelected(true);
         setSelectedMr(mrnumber);
-      } else {
-        const defaultMr = mrno[mrno.length - 1];
-        if (defaultMr) fetchReceipt(defaultMr);
       }
+      // default navigating to latest cs
+      //  else {
+      //   const defaultMr = mrno[0];
+      //   if (defaultMr) fetchReceipt(defaultMr);
+      // }
     }
   }, []);
   useEffect(() => {

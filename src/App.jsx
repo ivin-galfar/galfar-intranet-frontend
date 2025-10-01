@@ -8,10 +8,20 @@ import useUserInfo from "./CustomHooks/useUserInfo";
 import Particulars from "./Pages/Particulars";
 import FloatingNotification from "./Components/FloatingNotification";
 import Dashboard from "./Pages/Dashboard";
+import { useContext, useEffect } from "react";
+import { AppContext } from "./Components/Context";
 
 const App = () => {
   const location = useLocation();
   const userInfo = useUserInfo();
+
+  const { setIsAsset } = useContext(AppContext);
+  useEffect(() => {
+    if (!location.pathname.includes("/receipts")) {
+      setIsAsset(false);
+    }
+  }, [location.pathname]);
+
   return (
     <div className={`${location.pathname !== "/login" && "pl-12"}`}>
       {!userInfo && (

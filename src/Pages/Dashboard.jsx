@@ -246,9 +246,15 @@ const Dashboard = () => {
     doc.setFontSize(12);
     if (formData.type != "asset") {
       doc.text(
-        `COMPARATIVE STATEMENT - ${formData.hiringname} (${formData?.type?.charAt(0).toUpperCase() + formData?.type?.slice(1)})`,
+        `COMPARATIVE STATEMENT - ${formData.hiringname}`,
         105,
         formData.type == "asset" ? 35 : 25,
+        { align: "center" }
+      );
+      doc.text(
+        `(${formData?.type?.charAt(0).toUpperCase() + formData?.type?.slice(1)})`,
+        105,
+        formData.type == "hiring" ? 32 : 22,
         { align: "center" }
       );
     }
@@ -265,8 +271,8 @@ const Dashboard = () => {
     }
     doc.setFontSize(10);
     if (formData.type != "asset") {
-      doc.text(`Project: ${formData.projectValue}`, 14, 52);
-      doc.text(`Location: ${formData.locationValue}`, 14, 46);
+      doc.text(`Project: ${formData.projectvalue}`, 14, 52);
+      doc.text(`Location: ${formData.locationvalue}`, 14, 46);
     }
     doc.text(`Quantity: ${formData.qty}`, 14, 40);
     if (formData.type != "asset") {
@@ -291,11 +297,11 @@ const Dashboard = () => {
         }
       );
     }
-    doc.text(`CS NO: ${formData.equipmrnovalue}`, 200, 32, {
+    doc.text(`CS NO: ${formData.id}`, 200, 32, {
       align: "right",
     });
     doc.text(
-      `Date: ${new Date(formData.dateValue).toLocaleDateString()}`,
+      `Date: ${new Date(formData.datevalue).toLocaleDateString()}`,
       200,
       40,
       { align: "right" }
