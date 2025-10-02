@@ -19,7 +19,8 @@ import { jsPDF } from "jspdf";
 import { autoTable } from "jspdf-autotable";
 import galfarlogo from "../assets/Images/logo-new.png";
 import { IoWarningOutline } from "react-icons/io5";
-
+import useToggleAsset from "../store/assetStore";
+import { useDeleteStatement } from "../store/statementStore";
 const Dashboard = () => {
   const {
     receipts,
@@ -32,13 +33,13 @@ const Dashboard = () => {
     setStatusFilter,
     multiStatusFilter,
     setMultiStatusFilter,
-    deleted,
-    setDeleted,
     sharedTableData,
     setIsAsset,
     setApproverDetails,
   } = useContext(AppContext);
+  const { toggleasset, resetasset } = useToggleAsset();
   const [approversFetched, setApproversFetched] = useState(false);
+  const { deleted, resetDeleted, setDeleted } = useDeleteStatement();
 
   const userInfo = useUserInfo();
   const statusProgress = {
@@ -192,14 +193,14 @@ const Dashboard = () => {
       );
       setShowToast(true);
       setErrormessage("");
-      setDeleted(true);
+      setDeleted();
       setTriggerdelete(false);
       setTimeout(() => {
         setShowToast(false);
-        setDeleted(false);
+        resetDeleted();
       }, 1500);
     } catch (error) {
-      setDeleted(false);
+      resetDeleted();
       let message = error?.response?.data?.message;
       setErrormessage(message ? message : error.message);
     }
@@ -763,16 +764,13 @@ const Dashboard = () => {
                         className="px-2 py-1 bg-blue-500 text-white rounded inline-flex justify-center items-center gap-2 hover:bg-blue-600 cursor-pointer"
                         to={`/receipts/${row.original?.formData.id}`}
                         onClick={() =>
-                          setIsAsset(
-                            row.original.formData.type == "hiring"
-                              ? false
-                              : true
-                          )
+                          row.original.formData.type == "hiring"
+                            ? resetasset()
+                            : toggleasset()
                         }
                       >
                         View <FaArrowAltCircleRight />
                       </Link>
-
                       <IoPrint
                         className={` ${
                           !userInfo.is_admin

@@ -1,11 +1,11 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import galfarlogo from "../assets/Images/logo-new.png";
-import { AppContext } from "./Context";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { loginUser, registerUser } from "../APIs/api";
 import { SiTicktick } from "react-icons/si";
 import { MdErrorOutline } from "react-icons/md";
+import toggleNewUser from "../store/userStore";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,8 +14,7 @@ const Login = () => {
   const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
 
-  const { newuser, setNewuser } = useContext(AppContext);
-
+  const { newuser, setNewuser } = toggleNewUser();
   const { mutate: loginMutation, isPending: isLoading } = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
@@ -134,7 +133,7 @@ const Login = () => {
               </span>
               <button
                 type="button"
-                onClick={() => setNewuser(!newuser)}
+                onClick={() => setNewuser()}
                 className="text-indigo-600 hover:text-indigo-800 font-medium cursor-pointer"
               >
                 {newuser ? "Login" : "Create your account"}

@@ -5,6 +5,10 @@ import { AppContext } from "./Context";
 import useUserInfo from "../CustomHooks/useUserInfo";
 import { useNavigate } from "react-router-dom";
 import { LuRotateCcwSquare } from "react-icons/lu";
+import {
+  useClearStatementTable,
+  useSortVendors,
+} from "../store/statementStore";
 
 const ApproveModal = ({ setShowmodal, cs_id }) => {
   const [comments, setComments] = useState("");
@@ -15,11 +19,13 @@ const ApproveModal = ({ setShowmodal, cs_id }) => {
   const {
     setSharedTableData,
     sharedTableData,
-    setSortVendors,
-    setCleartable,
+
     setIsMRSelected,
     setSelectedMr,
   } = useContext(AppContext);
+
+  const { setClearTable } = useClearStatementTable();
+  const { resetSortVendors } = useSortVendors();
   const userInfo = useUserInfo();
   const navigate = useNavigate();
   const submitApproval = async (cs_id, status) => {
@@ -58,21 +64,21 @@ const ApproveModal = ({ setShowmodal, cs_id }) => {
       );
       setLastAction(finalStatus);
       if (finalStatus === "review") {
-        setSortVendors(false);
-        setCleartable(true);
+        resetSortVendors();
+        setClearTable();
         setIsMRSelected(false);
         setSelectedMr("default");
         setSharedTableData({
           formData: {
             hiringname: "",
-            dateValue: "",
+            datevalue: "",
             projectValue: "",
             locationValue: "",
             equipMrNoValue: "",
             emRegNoValue: "",
-            requiredDateValue: "",
-            requirementDurationValue: "",
-            selectedVendorReason: "",
+            requiredDatevalue: "",
+            requirementdurationvalue: "",
+            selectedvendorreason: "",
             currency: "",
             qty: "",
             file: [],

@@ -3,19 +3,18 @@ import { createContext, useState } from "react";
 export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
-  const [newuser, setNewuser] = useState(false);
   const initialTableData = [];
   const [sharedTableData, setSharedTableData] = useState({
     formData: {
       hiringname: "",
-      dateValue: new Date().toISOString().split("T")[0],
-      projectValue: "",
-      locationValue: "",
-      equipMrNoValue: "",
-      emRegNoValue: "",
-      requiredDateValue: new Date().toISOString().split("T")[0],
-      requirementDurationValue: "",
-      selectedVendorReason: "",
+      datevalue: new Date().toISOString().split("T")[0],
+      projectvalue: "",
+      locationvalue: "",
+      equipmrnovalue: "",
+      emrefnovalue: "",
+      requireddatevalue: new Date().toISOString().split("T")[0],
+      requirementdurationvalue: "",
+      selectedvendorreason: "",
       status: "",
       receiptupdated: null,
       type: "hiring",
@@ -30,12 +29,9 @@ const AppContextProvider = ({ children }) => {
   const [isMRSelected, setIsMRSelected] = useState(false);
   const [reqApprovalstatus, setreqApprovalstatus] = useState("");
   const [selectedmr, setSelectedMr] = useState(null);
-  const [pdfurl, setPdfurl] = useState("");
   const [particulars, setParticulars] = useState([]);
   const [particularname, setParticularName] = useState([]);
   const [newMr, setNewMr] = useState(false);
-  const [showupdated, setShowUpdated] = useState(false);
-  const [deleted, setDeleted] = useState(false);
   const [selectedVendorIndex, setSelectedVendorIndex] = useState(0);
   const [selectedVendorReason, setSelectedVendorReason] = useState();
   const [quantity, setQuantity] = useState(0);
@@ -50,8 +46,6 @@ const AppContextProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-        setNewuser,
-        newuser,
         sharedTableData,
         setSharedTableData,
         setCleartable,
@@ -70,18 +64,12 @@ const AppContextProvider = ({ children }) => {
         setReqMrno,
         selectedmr,
         setSelectedMr,
-        setPdfurl,
-        pdfurl,
         particulars,
         setParticulars,
         particularname,
         setParticularName,
         newMr,
         setNewMr,
-        setShowUpdated,
-        showupdated,
-        deleted,
-        setDeleted,
         selectedVendorIndex,
         setSelectedVendorIndex,
         setSelectedVendorReason,

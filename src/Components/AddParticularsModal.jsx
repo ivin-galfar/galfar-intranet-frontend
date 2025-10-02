@@ -5,6 +5,7 @@ import { REACT_SERVER_URL } from "../../config/ENV";
 import axios from "axios";
 import { MdOutlineErrorOutline } from "react-icons/md";
 import { AppContext } from "./Context";
+import { useStatementupdated } from "../store/statementStore";
 
 const AddParticularsModal = ({ setShowmodal }) => {
   const [fields, setFields] = useState(Array(5).fill(""));
@@ -13,7 +14,7 @@ const AddParticularsModal = ({ setShowmodal }) => {
   const [errormessage, setErrormessage] = useState("");
   const [showToast, setShowToast] = useState(false);
 
-  const { setShowUpdated } = useContext(AppContext);
+  const { setshowupdated } = useStatementupdated();
 
   const name = userInfo?.email.split("@")[0];
   const formattedName =
@@ -50,7 +51,7 @@ const AddParticularsModal = ({ setShowmodal }) => {
       );
 
       setShowToast(true);
-      setShowUpdated(true);
+      setshowupdated();
       setTimeout(() => {
         setShowmodal(false);
         setShowToast(false);

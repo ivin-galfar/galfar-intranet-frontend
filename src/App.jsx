@@ -8,17 +8,18 @@ import useUserInfo from "./CustomHooks/useUserInfo";
 import Particulars from "./Pages/Particulars";
 import FloatingNotification from "./Components/FloatingNotification";
 import Dashboard from "./Pages/Dashboard";
-import { useContext, useEffect } from "react";
-import { AppContext } from "./Components/Context";
+import { useEffect } from "react";
+import useToggleAsset from "./store/assetStore";
 
 const App = () => {
   const location = useLocation();
   const userInfo = useUserInfo();
 
-  const { setIsAsset } = useContext(AppContext);
+  const { resetasset } = useToggleAsset();
+
   useEffect(() => {
     if (!location.pathname.includes("/receipts")) {
-      setIsAsset(false);
+      resetasset();
     }
   }, [location.pathname]);
 

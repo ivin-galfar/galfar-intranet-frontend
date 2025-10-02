@@ -17,15 +17,18 @@ import { MdDelete } from "react-icons/md";
 import axios from "axios";
 import { REACT_SERVER_URL } from "../../config/ENV";
 import Alerts from "../Components/Alerts";
+import { useStatementupdated } from "../store/statementStore";
 
 const Particulars = () => {
-  const { particulars, setParticulars, showupdated, setShowUpdated } =
-    useContext(AppContext);
+  const { particulars, setParticulars } = useContext(AppContext);
   const [showmodal, setShowmodal] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [errormessage, setErrormessage] = useState("");
   const [triggerdelete, setTriggerdelete] = useState(false);
   const [deletetemplate, setDeletetemplate] = useState("");
+
+  const { showupdated, setshowupdated, resetshowupdated } =
+    useStatementupdated();
 
   useEffect(() => {
     const loadParticulars = async () => {
@@ -57,7 +60,7 @@ const Particulars = () => {
         return <ParticularsAccordion items={list} />;
       },
     }),
-    columnHelper.accessor("createdAt", {
+    columnHelper.accessor("created_at", {
       id: "template.date",
       header: "Created Date",
       cell: (info) => {
@@ -82,7 +85,7 @@ const Particulars = () => {
   const latestDate =
     particulars.length > 0
       ? new Date(
-          Math.max(...particulars.map((item) => new Date(item.createdAt)))
+          Math.max(...particulars.map((item) => new Date(item.created_at)))
         )
       : null;
   const formattedLatestDate = latestDate
@@ -93,7 +96,7 @@ const Particulars = () => {
       })
     : "-";
   const handleDelete = async (deletetemplate) => {
-    setShowUpdated(false);
+    resetshowupdated();
     try {
       const config = {
         "Content-Type": "application/json",
@@ -105,7 +108,7 @@ const Particulars = () => {
       );
 
       setShowToast(true);
-      setShowUpdated(true);
+      setshowupdated();
       setTimeout(() => {
         setShowToast(false);
         setTriggerdelete(false);
@@ -133,7 +136,7 @@ const Particulars = () => {
               className="flex items-center px-4 py-2 gap-2.5 bg-blue-600 text-white rounded shadow cursor-pointer"
               onClick={() => {
                 setShowmodal(true);
-                setShowUpdated(false);
+                resetshowupdated();
               }}
             >
               <FaPlus /> New Template
