@@ -21,10 +21,8 @@ const AppContextProvider = ({ children }) => {
     },
     tableData: initialTableData,
   });
-  const [cleartable, setCleartable] = useState(false);
   const [mrno, setMrno] = useState([]);
   const [reqmrno, setReqMrno] = useState([]);
-  const [sortVendors, setSortVendors] = useState(false);
   const [hasInputActivity, setHasInputActivity] = useState(false);
   const [isMRSelected, setIsMRSelected] = useState(false);
   const [reqApprovalstatus, setreqApprovalstatus] = useState("");
@@ -45,12 +43,8 @@ const AppContextProvider = ({ children }) => {
       value={{
         sharedTableData,
         setSharedTableData,
-        setCleartable,
-        cleartable,
         mrno,
         setMrno,
-        sortVendors,
-        setSortVendors,
         hasInputActivity,
         setHasInputActivity,
         isMRSelected,

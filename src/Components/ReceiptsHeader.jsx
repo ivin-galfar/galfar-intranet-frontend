@@ -18,14 +18,18 @@ import { FaTrash } from "react-icons/fa";
 import Alerts from "../Components/Alerts";
 import { useNavigate, useParams } from "react-router-dom";
 import useToggleAsset from "../store/assetStore";
-import { useSortVendors, useUpdateQuantity } from "../store/statementStore";
+import {
+  useClearStatementTable,
+  useDeleteStatement,
+  useSortVendors,
+  useUpdateQuantity,
+} from "../store/statementStore";
 
 const TableHeader = ({ isAdmin }) => {
   const inputRef = useRef(null);
   const {
     setSharedTableData,
     sharedTableData,
-    setCleartable,
     reqmrno,
     mrno,
     setIsMRSelected,
@@ -38,8 +42,6 @@ const TableHeader = ({ isAdmin }) => {
     setParticulars,
     setNewMr,
     newMr,
-    deleted,
-    setDeleted,
     setfreezeQuantity,
     freezequantity,
   } = useContext(AppContext);
@@ -55,6 +57,8 @@ const TableHeader = ({ isAdmin }) => {
   const { Asset, toggleasset, resetasset } = useToggleAsset();
   const { setQuantity } = useUpdateQuantity();
   const { setSortVendors, resetSortVendors } = useSortVendors();
+  const { setClearTable } = useClearStatementTable();
+  const { deleted, resetDeleted, setDeleted } = useDeleteStatement();
 
   useEffect(() => {
     const loadParticulars = async () => {
@@ -153,7 +157,7 @@ const TableHeader = ({ isAdmin }) => {
         console.log(error);
       }
     } else {
-      setCleartable(true);
+      setClearTable();
       setSharedTableData({
         formData: {},
         tableData: [],
@@ -183,7 +187,7 @@ const TableHeader = ({ isAdmin }) => {
       setNewMr(false);
     } else {
       resetSortVendors();
-      setCleartable(true);
+      setClearTable();
       setIsMRSelected(false);
       setSelectedMr("");
       setSharedTableData({
@@ -288,7 +292,7 @@ const TableHeader = ({ isAdmin }) => {
       );
       setShowToast(true);
       setErrormessage("");
-      setDeleted(true);
+      setDeleted();
       setTriggerdelete(false);
       setTimeout(() => {
         setShowToast(false);
@@ -298,10 +302,10 @@ const TableHeader = ({ isAdmin }) => {
       setIsMRSelected(false);
       setSelectedMr(null);
       resetSortVendors();
-      setCleartable(true);
+      setClearTable();
       setSharedTableData({ formData: {}, tableData: [] });
     } catch (error) {
-      setDeleted(false);
+      resetDeleted();
       let message = error?.response?.data?.message;
       setErrormessage(message ? message : error.message);
     }
@@ -313,7 +317,7 @@ const TableHeader = ({ isAdmin }) => {
         <div className="flex items-center gap-4">
           <button
             onClick={() => {
-              setCleartable(true);
+              setClearTable();
               setSharedTableData({
                 formData: {
                   equipmrnovalue: "",
@@ -526,7 +530,7 @@ const TableHeader = ({ isAdmin }) => {
                     setfreezeQuantity(true);
                   } else {
                     resetSortVendors();
-                    setCleartable(true);
+                    setClearTable();
                     setIsMRSelected(false);
                     setSelectedMr(e.target.value);
                     setSharedTableData({ formData: {}, tableData: [] });
