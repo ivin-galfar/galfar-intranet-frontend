@@ -9,6 +9,8 @@ import ReasonForSelection from "./ReasonForSelection";
 import fetchStatments from "../APIs/StatementsApi";
 import { useMutation } from "@tanstack/react-query";
 import { feedReceipt, updateReceipt } from "../APIs/api";
+import useToggleAsset from "../store/assetStore";
+import { useSortVendors } from "../store/statementStore";
 
 const Receipts = () => {
   const userInfo = useUserInfo();
@@ -23,7 +25,6 @@ const Receipts = () => {
     setNewMr,
     setMrno,
     selectedmr,
-    setSortVendors,
     hasInputActivity,
     isMRSelected,
     reqApprovalstatus,
@@ -35,9 +36,9 @@ const Receipts = () => {
     setfreezeQuantity,
     selectedVendorReason,
     setSelectedVendorReason,
-    isasset,
   } = useContext(AppContext);
-
+  const { Asset } = useToggleAsset();
+  const { setSortVendors, resetSortVendors } = useSortVendors();
   const ReceiptMutation = useMutation({
     mutationFn: feedReceipt,
     onMutate: () => {
@@ -46,7 +47,7 @@ const Receipts = () => {
     },
     onSuccess: (data) => {
       setShowToast(true);
-      setSortVendors(true);
+      setSortVendors();
       setIsMRSelected(true);
       setNewMr(false);
       setParticularName([]);
@@ -77,7 +78,7 @@ const Receipts = () => {
     },
     onSuccess: (data) => {
       setShowToast(true);
-      setSortVendors(false);
+      resetSortVendors();
       setIsMRSelected(true);
       setNewMr(false);
       setParticularName([]);
@@ -111,20 +112,31 @@ const Receipts = () => {
       requireddatevalue,
       requirementdurationvalue,
       currency,
+      hiringname,
     } = sharedTableData.formData;
 
     const isReview = sharedTableData.formData.status === "review";
     if (
       !isReview &&
-      !isasset &&
+      !Asset &&
       (!equipmrnovalue ||
         !emrefnovalue ||
         !locationvalue ||
         !projectvalue ||
+        !hiringname ||
         !requireddatevalue ||
         !requirementdurationvalue ||
         !currency)
     ) {
+      setShowToast(true);
+      setErrormessage("Please fill all required fields!!");
+      setTimeout(() => {
+        setShowToast(false);
+      }, 1500);
+      return;
+    }
+
+    if (Asset && (!hiringname || !currency)) {
       setShowToast(true);
       setErrormessage("Please fill all required fields!!");
       setTimeout(() => {

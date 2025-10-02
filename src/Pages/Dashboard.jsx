@@ -34,7 +34,6 @@ const Dashboard = () => {
     multiStatusFilter,
     setMultiStatusFilter,
     sharedTableData,
-    setIsAsset,
     setApproverDetails,
   } = useContext(AppContext);
   const { toggleasset, resetasset } = useToggleAsset();

@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 const useToggleAsset = create((set) => ({
   Asset: false,
-  toggleasset: () => set((state) => ({ Asset: !state.Asset })),
+  toggleasset: () => set(() => ({ Asset: true })),
   resetasset: () => set(() => ({ Asset: false })),
 }));
 

@@ -12,14 +12,15 @@ import axios from "axios";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import VendorSelectionTooltip from "./VendorSelectionTooltip";
 import Currency from "../Helpers/Currency";
+import {
+  useClearStatementTable,
+  useSortVendors,
+} from "../store/statementStore";
 
 export default function VerticalTable({ showcalc }) {
   const {
     sharedTableData,
     setSharedTableData,
-    cleartable,
-    setCleartable,
-    sortVendors,
     setHasInputActivity,
     particularname,
     newMr,
@@ -33,6 +34,8 @@ export default function VerticalTable({ showcalc }) {
     selectedVendorReason,
   } = useContext(AppContext);
   const [particular, setParticular] = useState([]);
+  const { cleartable, resetCleartable } = useClearStatementTable();
+  const { sortvendors } = useSortVendors();
 
   useEffect(() => {
     setSelectedVendorIndex(sharedTableData.formData.selectedvendorindex ?? 0);
@@ -110,14 +113,8 @@ export default function VerticalTable({ showcalc }) {
   );
 
   const userInfo = useUserInfo();
-  const [vatRate, setVatRate] = useState(5);
+  const [vatRate] = useState(5);
   const [showTooltip, setShowTooltip] = useState(false);
-
-  useEffect(() => {
-    if (hasInputActivity && tableData !== sharedTableData.tableData) {
-      setSharedTableData((prev) => ({ ...prev, tableData }));
-    }
-  }, [hasInputActivity, tableData]);
 
   useEffect(() => {
     if (sharedTableData?.tableData?.length) {
@@ -135,7 +132,7 @@ export default function VerticalTable({ showcalc }) {
         ),
       }));
       setTableData(clearedTableData);
-      setCleartable(false);
+      resetCleartable();
     }
   }, [cleartable, tableData]);
 
@@ -151,7 +148,7 @@ export default function VerticalTable({ showcalc }) {
     }));
 
     if (
-      sortVendors &&
+      sortvendors &&
       sharedTableData.formData?.status !== "review" &&
       sharedTableData.formData.receiptupdated == null
     ) {
@@ -165,7 +162,7 @@ export default function VerticalTable({ showcalc }) {
     } else {
       return vendors;
     }
-  }, [tableData, sortVendors, sharedTableData.formData.qty, selectedmr]);
+  }, [tableData, sortvendors, sharedTableData.formData.qty, selectedmr]);
 
   const vatRowIndex = tableData.findIndex(
     (row) => row.particulars.trim().toUpperCase() === "VAT @5%"
@@ -298,7 +295,7 @@ export default function VerticalTable({ showcalc }) {
     ];
   }, [
     userInfo?.is_admin,
-    sortVendors,
+    sortvendors,
     selectedmr == "default" ||
     selectedmr == "" ||
     selectedmr === null ||
@@ -340,10 +337,17 @@ export default function VerticalTable({ showcalc }) {
         Object.values(row.vendors).some((val) => val && val.trim() !== "")
       );
       setHasInputActivity(hasInput);
-
+      setSharedTableData((prev) => ({ ...prev, tableData: updated }));
       return updated;
     });
   };
+
+  useEffect(() => {
+    const hasInput = tableData.some((row) =>
+      Object.values(row.vendors).some((val) => val && val.trim() !== "")
+    );
+    setHasInputActivity(hasInput);
+  }, [tableData]);
 
   const table = useReactTable({
     data: tableData,
@@ -527,7 +531,7 @@ export default function VerticalTable({ showcalc }) {
 
           {(sharedTableData.formData.sentforapproval == "yes" ||
             !userInfo?.is_admin ||
-            sortVendors) &&
+            sortvendors) &&
             vendorTotals.some((val) => val > 0) && (
               <tr>
                 <td

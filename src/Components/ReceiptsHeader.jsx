@@ -17,6 +17,8 @@ import fetchParticulars from "../APIs/ParticularsApi";
 import { FaTrash } from "react-icons/fa";
 import Alerts from "../Components/Alerts";
 import { useNavigate, useParams } from "react-router-dom";
+import useToggleAsset from "../store/assetStore";
+import { useSortVendors, useUpdateQuantity } from "../store/statementStore";
 
 const TableHeader = ({ isAdmin }) => {
   const inputRef = useRef(null);
@@ -27,13 +29,10 @@ const TableHeader = ({ isAdmin }) => {
     reqmrno,
     mrno,
     setIsMRSelected,
-    setSortVendors,
-    sortVendors,
     setMrno,
     selectedmr,
     setSelectedMr,
     particulars,
-    setPdfurl,
     setParticularName,
     particularname,
     setParticulars,
@@ -41,13 +40,8 @@ const TableHeader = ({ isAdmin }) => {
     newMr,
     deleted,
     setDeleted,
-    quantity,
-    setQuantity,
     setfreezeQuantity,
     freezequantity,
-    selectedVendorReason,
-    isasset,
-    setIsAsset,
   } = useContext(AppContext);
 
   const formData = sharedTableData?.formData;
@@ -58,6 +52,9 @@ const TableHeader = ({ isAdmin }) => {
   const [triggerdelete, setTriggerdelete] = useState(false);
   const navigate = useNavigate();
   const { mrnumber } = useParams();
+  const { Asset, toggleasset, resetasset } = useToggleAsset();
+  const { setQuantity } = useUpdateQuantity();
+  const { setSortVendors, resetSortVendors } = useSortVendors();
 
   useEffect(() => {
     const loadParticulars = async () => {
@@ -116,7 +113,11 @@ const TableHeader = ({ isAdmin }) => {
   };
   const handleTemplateType = (e) => {
     const isChecked = e.target.checked;
-    setIsAsset(isChecked);
+    if (isChecked) {
+      toggleasset();
+    } else {
+      resetasset();
+    }
     setSharedTableData((prev) => ({
       ...prev,
       formData: {
@@ -131,7 +132,7 @@ const TableHeader = ({ isAdmin }) => {
     if (id && id !== mrnumber) {
       navigate(`/receipts/${id}`, { replace: true });
     }
-    setSortVendors(true);
+    setSortVendors();
     if (id && id != "default") {
       try {
         const config = {
@@ -181,7 +182,7 @@ const TableHeader = ({ isAdmin }) => {
       setSelectedMr(mrnumber);
       setNewMr(false);
     } else {
-      setSortVendors(false);
+      resetSortVendors();
       setCleartable(true);
       setIsMRSelected(false);
       setSelectedMr("");
@@ -296,7 +297,7 @@ const TableHeader = ({ isAdmin }) => {
       setParticularName([]);
       setIsMRSelected(false);
       setSelectedMr(null);
-      setSortVendors(false);
+      resetSortVendors();
       setCleartable(true);
       setSharedTableData({ formData: {}, tableData: [] });
     } catch (error) {
@@ -330,9 +331,9 @@ const TableHeader = ({ isAdmin }) => {
                 },
                 tableData: [],
               });
-              setMrno([]);
-              setSortVendors(false);
+              resetSortVendors();
               setNewMr(true);
+              resetasset();
               setSelectedMr(null);
               setParticularName([]);
               setIsMRSelected(false);
@@ -524,7 +525,7 @@ const TableHeader = ({ isAdmin }) => {
                     setSelectedMr(e.target.value);
                     setfreezeQuantity(true);
                   } else {
-                    setSortVendors(false);
+                    resetSortVendors();
                     setCleartable(true);
                     setIsMRSelected(false);
                     setSelectedMr(e.target.value);
@@ -563,14 +564,14 @@ const TableHeader = ({ isAdmin }) => {
                 <input
                   type="checkbox"
                   className="sr-only peer"
-                  checked={isasset}
+                  checked={Asset}
                   onChange={handleTemplateType}
                 />
                 <span>Asset Template</span>
                 <div className="ml-2 w-11 h-4 bg-gray-200 rounded-full relative peer-checked:bg-blue-600 transition-colors">
                   <div
                     className={`absolute top-[2px] left-[2px] w-3 h-3 bg-white rounded-full transition-transform
-    ${isasset || sharedTableData.formData.type === "asset" ? "translate-x-4" : "translate-x-0"}`}
+    ${Asset || sharedTableData.formData.type === "asset" ? "translate-x-4" : "translate-x-0"}`}
                   ></div>
                 </div>
               </label>
@@ -604,7 +605,7 @@ const TableHeader = ({ isAdmin }) => {
           {isAdmin ? (
             <>
               <span>
-                {!isasset || sharedTableData.formData.type != "asset"
+                {!Asset || sharedTableData.formData.type != "asset"
                   ? "Hiring - "
                   : "Asset - "}
               </span>

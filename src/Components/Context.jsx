@@ -34,14 +34,11 @@ const AppContextProvider = ({ children }) => {
   const [newMr, setNewMr] = useState(false);
   const [selectedVendorIndex, setSelectedVendorIndex] = useState(0);
   const [selectedVendorReason, setSelectedVendorReason] = useState();
-  const [quantity, setQuantity] = useState(0);
   const [freezequantity, setfreezeQuantity] = useState(false);
   const [receipts, setReceipts] = useState([]);
   const [allreceipts, setAllReceipts] = useState([]);
   const [statusFilter, setStatusFilter] = useState("All");
   const [multiStatusFilter, setMultiStatusFilter] = useState([]);
-  const [updatetriggered, setUpdateTriggered] = useState(false);
-  const [isasset, setIsAsset] = useState(false);
   const [approverDetails, setApproverDetails] = useState([]);
   return (
     <AppContext.Provider
@@ -74,8 +71,6 @@ const AppContextProvider = ({ children }) => {
         setSelectedVendorIndex,
         setSelectedVendorReason,
         selectedVendorReason,
-        setQuantity,
-        quantity,
         freezequantity,
         setfreezeQuantity,
         receipts,
@@ -86,10 +81,6 @@ const AppContextProvider = ({ children }) => {
         setMultiStatusFilter,
         statusFilter,
         setStatusFilter,
-        updatetriggered,
-        setUpdateTriggered,
-        isasset,
-        setIsAsset,
         approverDetails,
         setApproverDetails,
       }}
