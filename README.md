@@ -1,6 +1,4 @@
-# 🏗️galfar-intranet-frontend
-
-# 🏗️ galfar-scm
+# 🏗️galfar-intranet-app
 
 galfar-scm is a supply chain management web application designed for **tracking**, **managing**, and **optimizing** supply chain processes in construction and industrial projects.  
 This project features a **⚛️ React frontend** styled with **🎨 Tailwind CSS**, and a **🟢 Node.js backend** powered by **🚂 Express**.
@@ -20,9 +18,7 @@ This project features a **⚛️ React frontend** styled with **🎨 Tailwind CS
 
 ## 🧰 Tech Stack
 
-- 💻 **Frontend:** ![React](https://img.shields.io/badge/-React-61DAFB?style=flat&logo=react&logoColor=black) ![Vite](https://img.shields.io/badge/-Vite-646CFF?style=flat&logo=vite&logoColor=white)  
-- 🔧 **Backend:** ![Node.js](https://img.shields.io/badge/-Node.js-339933?style=flat&logo=nodedotjs&logoColor=white) ![Express](https://img.shields.io/badge/-Express-000000?style=flat&logo=express&logoColor=white)  
-- 🗄 **Database:** ![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?style=flat&logo=mongodb&logoColor=white)  
+- 💻  ![React](https://img.shields.io/badge/-React-61DAFB?style=flat&logo=react&logoColor=black) ![Vite](https://img.shields.io/badge/-Vite-646CFF?style=flat&logo=vite&logoColor=white)  
 - 🎨 **Styling:** Tailwind CSS ![TailwindCSS](https://img.shields.io/badge/-TailwindCSS-06B6D4?style=flat&logo=tailwind-css&logoColor=white)  
 - 🛠 **Tooling:** ![ESLint](https://img.shields.io/badge/-ESLint-4B32C3?style=flat&logo=eslint&logoColor=white) ![Prettier](https://img.shields.io/badge/-Prettier-F7B93E?style=flat&logo=prettier&logoColor=black)
 
@@ -55,6 +51,5 @@ This project features a **⚛️ React frontend** styled with **🎨 Tailwind CS
 
      ```bash
      npm run dev (from root)
-     ```
      ```
 
