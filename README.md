@@ -1,6 +1,4 @@
-# 🏗️galfar-intranet-frontend
-
-# 🏗️ galfar-scm
+# 🏗️galfar-intranet-app
 
 galfar-scm is a supply chain management web application designed for **tracking**, **managing**, and **optimizing** supply chain processes in construction and industrial projects.  
 This project features a **⚛️ React frontend** styled with **🎨 Tailwind CSS**, and a **🟢 Node.js backend** powered by **🚂 Express**.
