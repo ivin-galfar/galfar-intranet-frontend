@@ -163,18 +163,18 @@ const Home = () => {
               }}
             >
               <FaBell size={22} className="text-gray-700" />
-              {userInfo?.is_admin
+              {(userInfo?.is_admin
                 ? reviewReceipts?.length > 0
-                : pendingReceipts.length > 0 && (
-                    <span
-                      className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold 
+                : pendingReceipts.length > 0) && (
+                <span
+                  className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold 
              rounded-full w-4 h-4 flex items-center justify-center shadow-md animate-pulse-highlight"
-                    >
-                      {!userInfo.is_admin
-                        ? pendingReceipts.length
-                        : reviewReceipts?.length}
-                    </span>
-                  )}
+                >
+                  {!userInfo.is_admin
+                    ? pendingReceipts.length
+                    : reviewReceipts?.length}
+                </span>
+              )}
             </Link>
           </div>
           <ul className="p-2 space-y-3 ">

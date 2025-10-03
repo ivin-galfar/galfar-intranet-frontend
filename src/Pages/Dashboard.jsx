@@ -39,7 +39,7 @@ const Dashboard = () => {
   const { toggleasset, resetasset } = useToggleAsset();
   const [approversFetched, setApproversFetched] = useState(false);
   const { deleted, resetDeleted, setDeleted } = useDeleteStatement();
-
+  const [searchcs, setSearchCS] = useState("");
   const userInfo = useUserInfo();
   const statusProgress = {
     "Pending For HOD": 20,
@@ -517,26 +517,42 @@ const Dashboard = () => {
     const blobUrl = URL.createObjectURL(pdfBlob);
     window.open(blobUrl);
   };
-
+  const handleSearch = (e) => {
+    (setSearchCS(e.target.value),
+      setStatusFilter("All"),
+      setMultiStatusFilter([]));
+  };
   const filteredReceiptsOnstatus = useMemo(() => {
     if (!Array.isArray(allreceipts)) return [];
-    if (statusFilter === "All") return receipts;
-    if (statusFilter === "review") {
-      return receipts.filter((r) => r.formData.status == "review");
-    }
-    if (multiStatusFilter && multiStatusFilter.length > 0) {
-      return receipts.filter((r) =>
-        multiStatusFilter
-          .filter((status) => status !== "Approved" && status !== "Rejected")
-          .map((status) => status?.toLowerCase())
-          .includes(r?.formData?.status?.toLowerCase())
-      );
+    let filteredreceipts = receipts;
+    if (statusFilter !== "All" && searchcs == "") {
+      if (statusFilter === "review") {
+        filteredreceipts = receipts.filter(
+          (r) => r.formData.status == "review"
+        );
+      }
+      if (multiStatusFilter && multiStatusFilter.length > 0) {
+        filteredreceipts = receipts.filter((r) =>
+          multiStatusFilter
+            .filter((status) => status !== "Approved" && status !== "Rejected")
+            .map((status) => status?.toLowerCase())
+            .includes(r?.formData?.status?.toLowerCase())
+        );
+      } else {
+        filteredreceipts = receipts.filter(
+          (r) =>
+            r?.formData?.status?.toLowerCase() === statusFilter?.toLowerCase()
+        );
+      }
     }
 
-    return receipts.filter(
-      (r) => r?.formData?.status?.toLowerCase() === statusFilter?.toLowerCase()
-    );
-  }, [allreceipts, statusFilter, multiStatusFilter]);
+    if (searchcs.trim() !== "") {
+      filteredreceipts = receipts.filter((r) =>
+        r.formData.id?.toString().includes(searchcs)
+      );
+    }
+    return filteredreceipts;
+  }, [allreceipts, statusFilter, multiStatusFilter, searchcs]);
 
   const columnHelper = createColumnHelper();
   const columns = [
@@ -639,7 +655,7 @@ const Dashboard = () => {
 
   return (
     <div className="w-full p-5">
-      <div className="flex border-b border-gray-300 mb-4">
+      <div className="flex border-b    border-gray-300 mb-4">
         {["All", "Approved", "Rejected", "Pending", "Under Review"].map(
           (tab) => {
             if (tab == "Under Review" && !userInfo?.is_admin) return null;
@@ -708,6 +724,17 @@ const Dashboard = () => {
             );
           }
         )}
+        <div className="mb-1 ml-auto">
+          <label className="  ml-auto text-sm font-medium text-gray-700 ">
+            CS Number:
+          </label>
+          <input
+            type="text"
+            name="search"
+            className="border  h-8 flex border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={handleSearch}
+          />
+        </div>
       </div>
       <div className="overflow-x-auto bg-white shadow rounded border border-gray-200">
         <table className="min-w-full divide-y divide-gray-200">
