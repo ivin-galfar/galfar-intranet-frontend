@@ -654,8 +654,8 @@ const Dashboard = () => {
   });
 
   return (
-    <div className="w-full p-5">
-      <div className="flex border-b    border-gray-300 mb-4">
+    <div className="w-full px-5 ">
+      <div className="flex border-b  border-gray-300 mb-4">
         {["All", "Approved", "Rejected", "Pending", "Under Review"].map(
           (tab) => {
             if (tab == "Under Review" && !userInfo?.is_admin) return null;
@@ -736,9 +736,12 @@ const Dashboard = () => {
           />
         </div>
       </div>
-      <div className="overflow-x-auto bg-white shadow rounded border border-gray-200">
+      <div
+        className="overflow-y-auto  bg-white shadow rounded border border-gray-200"
+        style={{ height: `calc(93vh - 140px)` }}
+      >
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="top-0 z-10 sticky  bg-gray-50">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (

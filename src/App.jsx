@@ -10,6 +10,7 @@ import FloatingNotification from "./Components/FloatingNotification";
 import Dashboard from "./Pages/Dashboard";
 import { useEffect } from "react";
 import useToggleAsset from "./store/assetStore";
+import Footer from "./Components/Footer";
 
 const App = () => {
   const location = useLocation();
@@ -55,6 +56,7 @@ const App = () => {
         />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
+      <Footer />
     </div>
   );
 };

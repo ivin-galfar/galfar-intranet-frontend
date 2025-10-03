@@ -136,13 +136,13 @@ const Home = () => {
   });
 
   return (
-    <div className="w-full h-[50vh]">
+    <div className="w-full h-[50vh] pb-5">
       <img
         src={galfarlogo}
         alt="Galfar Logo"
         className="w-full  object-cover  h-full"
       />
-      <div className="flex gap-6 ml-10 mt-10">
+      <div className="flex gap-6 ml-10 mt-5">
         <div className="w-1/3 p-4 bg-white rounded-lg shadow-md border border-gray-200">
           <div className="flex justify-between">
             <h2 className="flex text-lg font-semibold mb-4  gap-2 items-center">
