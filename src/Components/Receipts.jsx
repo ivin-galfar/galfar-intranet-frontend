@@ -227,7 +227,7 @@ const Receipts = () => {
   const isReview = sharedTableData.formData.status === "review";
 
   return (
-    <div className="pt-1 pl-10 pr-5 pb-28 relative">
+    <div className="pt-1 pl-10 pr-5 pb-28 relative  flex-grow">
       <h1 className="font-bold mb-4">
         <TableHeader isAdmin={userInfo?.is_admin} />
       </h1>

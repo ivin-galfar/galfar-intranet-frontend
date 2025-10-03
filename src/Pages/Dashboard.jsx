@@ -654,7 +654,7 @@ const Dashboard = () => {
   });
 
   return (
-    <div className="w-full px-5 ">
+    <div className="w-full px-5 flex-grow">
       <div className="flex border-b  border-gray-300 mb-4">
         {["All", "Approved", "Rejected", "Pending", "Under Review"].map(
           (tab) => {

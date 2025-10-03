@@ -11,12 +11,14 @@ import Dashboard from "./Pages/Dashboard";
 import { useEffect } from "react";
 import useToggleAsset from "./store/assetStore";
 import Footer from "./Components/Footer";
+import Contact from "./Pages/Contact";
 
 const App = () => {
   const location = useLocation();
   const userInfo = useUserInfo();
 
   const { resetasset } = useToggleAsset();
+  const isLoginPage = location.pathname === "/login";
 
   useEffect(() => {
     if (!location.pathname.includes("/receipts")) {
@@ -25,14 +27,16 @@ const App = () => {
   }, [location.pathname]);
 
   return (
-    <div className={`${location.pathname !== "/login" && "pl-12"}`}>
+    <div
+      className={`${location.pathname !== "/login" && "pl-12"} flex flex-col min-h-screen`}
+    >
       {!userInfo && (
         <FloatingNotification
           message={"Login to view statements"}
           duration={4000}
         />
       )}{" "}
-      {location.pathname !== "/login" && <Header />}
+      {!isLoginPage && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
@@ -55,8 +59,9 @@ const App = () => {
           }
         />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
-      <Footer />
+      {!isLoginPage && <Footer />}
     </div>
   );
 };

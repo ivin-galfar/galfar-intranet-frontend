@@ -136,7 +136,7 @@ const Home = () => {
   });
 
   return (
-    <div className="w-full h-[50vh] pb-5">
+    <div className="flex flex-col min-h-screen">
       <img
         src={galfarlogo}
         alt="Galfar Logo"
