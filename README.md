@@ -52,5 +52,4 @@ This project features a **⚛️ React frontend** styled with **🎨 Tailwind CS
      ```bash
      npm run dev (from root)
      ```
-     ```
 
