@@ -330,7 +330,7 @@ const TableHeader = ({ isAdmin }) => {
                   qty: "",
                   currency: "",
                   requireddatevalue: new Date(),
-                  dateValue: new Date(),
+                  datevalue: new Date(),
                   type: "hiring",
                 },
                 tableData: [],

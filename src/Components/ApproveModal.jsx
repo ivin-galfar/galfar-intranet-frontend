@@ -76,7 +76,7 @@ const ApproveModal = ({ setShowmodal, cs_id }) => {
             locationValue: "",
             equipMrNoValue: "",
             emRegNoValue: "",
-            requiredDatevalue: "",
+            requireddatevalue: "",
             requirementdurationvalue: "",
             selectedvendorreason: "",
             currency: "",
