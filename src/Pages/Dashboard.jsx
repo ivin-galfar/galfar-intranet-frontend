@@ -430,8 +430,6 @@ const Dashboard = () => {
       GM: "General Manager",
       CEO: "Chief Executive Officer",
     };
-    console.log(formData);
-
     const approvalsStatus =
       formData?.approverdetails?.approverDetails?.reduce((acc, d) => {
         acc[d.role] = d.action;

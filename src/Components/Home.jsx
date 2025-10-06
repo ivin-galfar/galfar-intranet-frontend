@@ -60,11 +60,6 @@ const Home = () => {
       "Rejected",
     ],
   };
-  console.log("environment");
-  console.log(import.meta.env.VITE_ENVIRONMENT);
-  console.log("production url");
-
-  console.log(import.meta.env.VITE_REACT_PROD_SERVER_URL);
   useEffect(() => {
     const loadParticulars = async () => {
       try {
