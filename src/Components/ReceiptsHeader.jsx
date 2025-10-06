@@ -8,7 +8,7 @@ import {
 import useUserInfo from "../CustomHooks/useUserInfo";
 import { AppContext } from "./Context";
 import axios from "axios";
-import { REACT_SERVER_URL, CLOUDINARY_CLOUD_NAME } from "../../config/ENV";
+import { REACT_SERVER_URL } from "../../config/ENV";
 import { TiTick } from "react-icons/ti";
 import { RxCrossCircled } from "react-icons/rx";
 import { FaFileUpload } from "react-icons/fa";
@@ -238,46 +238,29 @@ const TableHeader = ({ isAdmin }) => {
   }
 
   const handleFileUpload = async (e) => {
-    const files = e.target.files;
-    const uploadedUrls = [];
-    if (files) {
-      for (const file of files) {
-        try {
-          const formData = new FormData();
-          formData.append("file", file);
-          formData.append("upload_preset", "Techno_computers");
-          formData.append("resource_type", "raw");
-          const response = await fetch(
-            `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/raw/upload`,
-            {
-              method: "POST",
-              body: formData,
-            }
-          );
-
-          if (response.ok) {
-            const data = await response.json();
-            uploadedUrls.push(data.secure_url);
-          }
-        } catch (error) {
-          console.error("Error uploading image:", error);
-          setErrormessage(true);
-        }
-      }
-      if (uploadedUrls.length > 0) {
-        setSharedTableData((prev) => ({
-          ...prev,
-          formData: {
-            ...prev.formData,
-            file: uploadedUrls,
-          },
-        }));
-        setShowToast(true);
-        setErrormessage(false);
-        setTimeout(() => {
-          setShowToast(false);
-        }, 1500);
-      }
+    const files = Array.from(e.target.files);
+    try {
+      const formData = new FormData();
+      files.forEach((file) => {
+        formData.append("file", file);
+      });
+      const response = await axios.post(
+        `${REACT_SERVER_URL}/receipts/file`,
+        formData
+      );
+      setSharedTableData((prev) => ({
+        ...prev,
+        formData: {
+          ...prev.formData,
+          file: response.data.uploadedFiles.map((file) => file.fileUrl),
+        },
+      }));
+    } catch (error) {
+      setShowToast(true);
+      setErrormessage(error.message);
+      setTimeout(() => {
+        setShowToast(false);
+      }, 1500);
     }
   };
   const handleDelete = async (mr) => {
@@ -326,7 +309,7 @@ const TableHeader = ({ isAdmin }) => {
                   locationvalue: "",
                   projectvalue: "",
                   requirementdurationvalue: "",
-                  file: "",
+                  file: [],
                   qty: "",
                   currency: "",
                   requireddatevalue: new Date(),
