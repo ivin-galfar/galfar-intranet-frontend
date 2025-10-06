@@ -18,6 +18,7 @@ const AppContextProvider = ({ children }) => {
       status: "",
       receiptupdated: null,
       type: "hiring",
+      file: [],
     },
     tableData: initialTableData,
   });
