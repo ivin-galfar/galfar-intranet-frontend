@@ -15,8 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     env:
-      VITE_ENVIRONMENT:"production"
-      VITE_REACT_PROD_SERVER_URL:"https://aznuaegecbackend.azurewebsites.net"
+      VITE_ENVIRONMENT: "production"
+      VITE_REACT_PROD_SERVER_URL: "https://aznuaegecbackend.azurewebsites.net"
     steps:
       - uses: actions/checkout@v3
         with:
