@@ -202,7 +202,7 @@ const Particulars = () => {
                       <button
                         onClick={() => {
                           setTriggerdelete(true);
-                          setDeletetemplate(row.original.template);
+                          setDeletetemplate(row.original.id);
                         }}
                         className="hover:text-red-800 cursor-pointer"
                       >
