@@ -125,7 +125,11 @@ const SideNav = ({ isOpen, setIsMenuOpen, ref }) => {
           className="flex gap-2 p-2 rounded text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 cursor-pointer"
           onClick={handleLogout}
         >
-          {userInfo ? <FaSignOutAlt /> : <FaSignInAlt />}
+          {userInfo ? (
+            <FaSignOutAlt />
+          ) : (
+            <FaSignInAlt className="text-green-400 text-2xl glow-pop-green" />
+          )}
           {isOpen && (userInfo ? "Sign out" : "Sign In")}
         </button>
       </nav>
