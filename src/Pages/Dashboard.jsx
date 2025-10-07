@@ -789,7 +789,7 @@ const Dashboard = () => {
                       )}
                     </td>
                   ))}
-                  <td className="border-gray-300 px-4 py-2 text-sm text-gray-700 text-center">
+                  <td className="border-gray-300 border-b px-4 py-2 text-sm text-gray-700 text-center">
                     <div className="flex items-center justify-center gap-4">
                       <Link
                         className="px-2 py-1 bg-blue-500 text-white rounded inline-flex justify-center items-center gap-2 hover:bg-blue-600 cursor-pointer"
@@ -833,7 +833,7 @@ const Dashboard = () => {
                       />
                     </div>
                   </td>
-                  <td className="border-gray-300 px-4 py-2 text-sm text-gray-700 text-center">
+                  <td className="border-gray-300 border-b px-4 py-2 text-sm text-gray-700 text-center">
                     {new Date(
                       row.original.formData.created_at
                     ).toLocaleDateString("en-GB", {

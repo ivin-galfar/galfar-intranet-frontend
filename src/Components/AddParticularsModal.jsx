@@ -57,7 +57,7 @@ const AddParticularsModal = ({ setShowmodal }) => {
         setShowToast(false);
       }, 1500);
     } catch (error) {
-      let message = error?.response?.data?.message;
+      let message = error?.response?.data;
       setErrormessage(message ? message : error.message);
       setShowToast(true);
       setTimeout(() => {
