@@ -756,6 +756,9 @@ const Dashboard = () => {
                 <th className="border-b border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 text-center">
                   Action
                 </th>
+                <th className="border-b border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 text-center">
+                  Created On
+                </th>
               </tr>
             ))}
           </thead>
@@ -829,6 +832,15 @@ const Dashboard = () => {
                         }}
                       />
                     </div>
+                  </td>
+                  <td className="border-gray-300 px-4 py-2 text-sm text-gray-700 text-center">
+                    {new Date(
+                      row.original.formData.created_at
+                    ).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })}
                   </td>
                 </tr>
               ))

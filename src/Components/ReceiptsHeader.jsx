@@ -362,16 +362,14 @@ const TableHeader = ({ isAdmin }) => {
                   {" "}
                   <select
                     id="templateSelect"
-                    value={
-                      typeof particularname === "string" ? particularname : ""
-                    }
+                    value={particularname}
                     onChange={(e) => setParticularName(e.target.value)}
                     className="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-white overflow-hidden"
                   >
                     <option value="">Select Template</option>
                     {Array.isArray(particulars) &&
                       particulars.map((template, index) => (
-                        <option key={template.id} value={template.template}>
+                        <option key={template.id} value={template.id}>
                           {template.template}
                         </option>
                       ))}

@@ -139,7 +139,7 @@ const Home = () => {
       <img
         src={galfarlogo}
         alt="Galfar Logo"
-        className="w-full  object-cover  h-full"
+        className="w-full  object-cover  h-full sticky"
       />
       <div className="flex gap-6 ml-10 mt-5">
         <div className="w-1/3 p-4 bg-white rounded-lg shadow-md border border-gray-200">
@@ -282,7 +282,7 @@ const Home = () => {
                     className="border border-blue-500 text-blue-500 hover:bg-blue-50 text-sm px-3 py-1.5 rounded cursor-pointer"
                     onClick={() => {
                       (setNewMr(true),
-                        setParticularName(particulars[0]?.template),
+                        setParticularName(particulars[0]?.id),
                         setNewMr(true));
                     }}
                   >
