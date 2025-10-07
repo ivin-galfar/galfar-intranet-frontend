@@ -135,9 +135,9 @@ const Home = () => {
   });
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen relative">
       <img
-        src={galfarlogo}
+        src={galfarlogo || ""}
         alt="Galfar Logo"
         className="w-full  object-cover  h-full sticky"
       />
