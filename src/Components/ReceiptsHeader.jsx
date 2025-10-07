@@ -345,7 +345,7 @@ const TableHeader = ({ isAdmin }) => {
                 d="M12 4v16m8-8H4"
               />
             </svg>
-            New Statement
+            Create Statement
           </button>
           <div
             className={`flex items-center gap-2 ${!newMr ? "invisible" : ""}`}
