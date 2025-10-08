@@ -804,7 +804,7 @@ const Dashboard = () => {
                       </Link>
                       <IoPrint
                         className={` ${
-                          !userInfo.is_admin
+                          !userInfo?.is_admin
                             ? "text-gray-400 pointer-events-none cursor-not-allowed"
                             : "text-black cursor-pointer"
                         }`}
@@ -824,7 +824,7 @@ const Dashboard = () => {
                         }}
                       />
                       <FaTrash
-                        className={`mr-1 text-red-500 ${!userInfo.is_admin ? "hidden" : "cursor-pointer"}`}
+                        className={`mr-1 text-red-500 ${!userInfo?.is_admin ? "hidden" : "cursor-pointer"}`}
                         size={16}
                         onClick={() => {
                           setdeleteMr(row.original.formData.id);

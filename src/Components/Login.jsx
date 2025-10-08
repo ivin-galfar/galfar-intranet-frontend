@@ -129,14 +129,14 @@ const Login = () => {
               <span className="text-gray-700">
                 {newuser
                   ? "Already have an account?"
-                  : "Don't have an account?"}
+                  : "Contact Admin for new accounts!"}
               </span>
               <button
                 type="button"
                 onClick={() => setNewuser()}
                 className="text-indigo-600 hover:text-indigo-800 font-medium cursor-pointer"
               >
-                {newuser ? "Login" : "Create your account"}
+                {newuser ? "Login" : ""}
               </button>
             </div>
 
