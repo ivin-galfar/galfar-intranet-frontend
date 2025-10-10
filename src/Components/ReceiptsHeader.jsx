@@ -17,7 +17,6 @@ import fetchParticulars from "../APIs/ParticularsApi";
 import { FaTrash } from "react-icons/fa";
 import Alerts from "../Components/Alerts";
 import { useNavigate, useParams } from "react-router-dom";
-import useToggleAsset from "../store/assetStore";
 import {
   useClearStatementTable,
   useDeleteStatement,
@@ -54,11 +53,12 @@ const TableHeader = ({ isAdmin }) => {
   const [triggerdelete, setTriggerdelete] = useState(false);
   const navigate = useNavigate();
   const { mrnumber } = useParams();
-  const { Asset, toggleasset, resetasset } = useToggleAsset();
   const { setQuantity } = useUpdateQuantity();
   const { setSortVendors, resetSortVendors } = useSortVendors();
   const { setClearTable } = useClearStatementTable();
   const { deleted, resetDeleted, setDeleted } = useDeleteStatement();
+
+  const Asset = userInfo.role == "InitA" ? true : false;
 
   useEffect(() => {
     const loadParticulars = async () => {
@@ -72,6 +72,8 @@ const TableHeader = ({ isAdmin }) => {
     };
     loadParticulars();
   }, []);
+
+  console.log(sharedTableData);
 
   useEffect(() => {
     if (userInfo?.is_admin) {
@@ -112,21 +114,6 @@ const TableHeader = ({ isAdmin }) => {
       formData: {
         ...prev.formData,
         currency: value,
-      },
-    }));
-  };
-  const handleTemplateType = (e) => {
-    const isChecked = e.target.checked;
-    if (isChecked) {
-      toggleasset();
-    } else {
-      resetasset();
-    }
-    setSharedTableData((prev) => ({
-      ...prev,
-      formData: {
-        ...prev.formData,
-        type: isChecked ? "asset" : "hiring",
       },
     }));
   };
@@ -193,7 +180,7 @@ const TableHeader = ({ isAdmin }) => {
       setSharedTableData({
         formData: {
           datevalue: new Date().toISOString().split("T")[0],
-          type: "hiring",
+          type: userInfo.role == "InitA" ? "asset" : "hiring",
         },
         tableData: [],
       });
@@ -314,13 +301,12 @@ const TableHeader = ({ isAdmin }) => {
                   currency: "",
                   requireddatevalue: new Date(),
                   datevalue: new Date(),
-                  type: "hiring",
+                  type: userInfo.role == "InitA" ? "asset" : "hiring",
                 },
                 tableData: [],
               });
               resetSortVendors();
               setNewMr(true);
-              resetasset();
               setSelectedMr(null);
               setParticularName([]);
               setIsMRSelected(false);
@@ -544,22 +530,6 @@ const TableHeader = ({ isAdmin }) => {
                   <option value="GBP">£ GBP</option>
                 </select>
               </div>
-
-              <label className="flex items-center cursor-pointer gap-2 flex-1">
-                <input
-                  type="checkbox"
-                  className="sr-only peer"
-                  checked={Asset}
-                  onChange={handleTemplateType}
-                />
-                <span>Asset Template</span>
-                <div className="ml-2 w-11 h-4 bg-gray-200 rounded-full relative peer-checked:bg-blue-600 transition-colors">
-                  <div
-                    className={`absolute top-[2px] left-[2px] w-3 h-3 bg-white rounded-full transition-transform
-    ${Asset || sharedTableData.formData.type === "asset" ? "translate-x-4" : "translate-x-0"}`}
-                  ></div>
-                </div>
-              </label>
             </div>
           )}
           <div className="font-medium flex flex-col gap-1 text-sm  items-center  ">
@@ -627,7 +597,7 @@ const TableHeader = ({ isAdmin }) => {
         </div>
       </div>
 
-      {sharedTableData.formData.type === "hiring" && (
+      {!Asset && (
         <div className="flex justify-between mt-4 px-4">
           <div className="flex flex-col space-y-1 text-left w-1/3">
             <p>

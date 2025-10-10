@@ -9,7 +9,6 @@ import ReasonForSelection from "./ReasonForSelection";
 import fetchStatments from "../APIs/StatementsApi";
 import { useMutation } from "@tanstack/react-query";
 import { feedReceipt, updateReceipt } from "../APIs/api";
-import useToggleAsset from "../store/assetStore";
 import { useSortVendors } from "../store/statementStore";
 
 const Receipts = () => {
@@ -37,7 +36,8 @@ const Receipts = () => {
     selectedVendorReason,
     setSelectedVendorReason,
   } = useContext(AppContext);
-  const { Asset } = useToggleAsset();
+  const Asset = userInfo.role == "InitA" ? true : false;
+
   const { setSortVendors, resetSortVendors } = useSortVendors();
   const ReceiptMutation = useMutation({
     mutationFn: feedReceipt,

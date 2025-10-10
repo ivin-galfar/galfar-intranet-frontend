@@ -8,8 +8,6 @@ import useUserInfo from "./CustomHooks/useUserInfo";
 import Particulars from "./Pages/Particulars";
 import FloatingNotification from "./Components/FloatingNotification";
 import Dashboard from "./Pages/Dashboard";
-import { useEffect } from "react";
-import useToggleAsset from "./store/assetStore";
 import Footer from "./Components/Footer";
 import Contact from "./Pages/Contact";
 
@@ -17,14 +15,7 @@ const App = () => {
   const location = useLocation();
   const userInfo = useUserInfo();
 
-  const { resetasset } = useToggleAsset();
   const isLoginPage = location.pathname === "/login";
-
-  useEffect(() => {
-    if (!location.pathname.includes("/receipts")) {
-      resetasset();
-    }
-  }, [location.pathname]);
 
   return (
     <div

@@ -10,12 +10,14 @@ const fetchStatments = async ({ expectedStatuses, userInfo }) => {
     const response = await axios.get(`${REACT_SERVER_URL}/receipts`, config);
 
     const receipts = response.data.receipts.sort(
-      (a, b) => new Date(b.formData.id) - new Date(a.formData.id)
+      (a, b) =>
+        new Date(b.formData.created_at) - new Date(a.formData.created_at)
     );
 
     let categorizedReceipts = receipts;
     if (userInfo?.is_admin) {
-      categorizedReceipts = receipts;
+      const type = userInfo?.role == "InitA" ? "asset" : "hiring";
+      categorizedReceipts = receipts.filter((r) => r.formData.type == type);
     } else {
       categorizedReceipts = receipts.filter((receipt) => {
         const status = receipt.formData?.status?.toLowerCase();
