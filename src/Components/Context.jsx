@@ -1,8 +1,11 @@
 import { createContext, useState } from "react";
+import useUserInfo from "../CustomHooks/useUserInfo";
 
 export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
+  const userInfo = useUserInfo();
+
   const initialTableData = [];
   const [sharedTableData, setSharedTableData] = useState({
     formData: {
@@ -17,7 +20,7 @@ const AppContextProvider = ({ children }) => {
       selectedvendorreason: "",
       status: "",
       receiptupdated: null,
-      type: "hiring",
+      type: userInfo.role == "InitA" ? "asset" : "hiring",
       file: [],
     },
     tableData: initialTableData,

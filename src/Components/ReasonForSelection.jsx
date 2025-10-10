@@ -53,7 +53,7 @@ const ReasonForSelection = ({
         {
           selectedVendorIndex: selectedVendorIndex,
           selectedVendorReason: selectedRecommendation,
-          status: statusMap[userInfo.role] || "",
+          status: statusMap[userInfo.role] || "Pending For HOD",
         }
       );
 

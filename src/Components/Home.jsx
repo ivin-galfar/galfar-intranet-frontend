@@ -30,7 +30,15 @@ const Home = () => {
   } = useContext(AppContext);
   const userInfo = useUserInfo();
   const statusMapping = {
-    Initiator: [
+    InitA: [
+      "Pending for HOD",
+      "Pending for GM",
+      "Pending for CEO",
+      "Approved",
+      "Rejected",
+      "",
+    ],
+    InitH: [
       "Pending for HOD",
       "Pending for GM",
       "Pending for CEO",
@@ -130,7 +138,7 @@ const Home = () => {
   sevenDaysAgo.setDate(today.getDate() - 3);
 
   const recentReceipts = receipts.filter((r) => {
-    const created = new Date(r.formData.created_at);
+    const created = new Date(r.formData?.created_at);
     return created >= sevenDaysAgo;
   });
 

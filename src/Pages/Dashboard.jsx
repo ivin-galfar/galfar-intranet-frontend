@@ -51,10 +51,18 @@ const Dashboard = () => {
   };
 
   const statusMapping = {
-    Initiator: [
-      "Pending For HOD",
-      "Pending For GM",
-      "Pending For CEO",
+    InitA: [
+      "Pending for HOD",
+      "Pending for GM",
+      "Pending for CEO",
+      "Approved",
+      "Rejected",
+      "",
+    ],
+    InitH: [
+      "Pending for HOD",
+      "Pending for GM",
+      "Pending for CEO",
       "Approved",
       "Rejected",
       "",
@@ -559,23 +567,33 @@ const Dashboard = () => {
       header: "Sl. No.",
       cell: ({ row }) => row.index + 1,
     }),
-    columnHelper.accessor((row) => row?.formData.id, {
+    columnHelper.accessor((row) => row?.formData?.id, {
       id: "mrno",
       header: "CS NO",
       cell: (info) => info.getValue() || "-",
     }),
+    columnHelper.accessor(
+      (row) =>
+        row?.formData?.type.charAt(0).toUpperCase() +
+        row?.formData?.type.slice(1),
+      {
+        id: "type",
+        header: "Statement Type",
+        cell: (info) => info.getValue() || "-",
+      }
+    ),
 
-    columnHelper.accessor((row) => row?.formData.hiringname, {
+    columnHelper.accessor((row) => row?.formData?.hiringname, {
       id: "hiring.name",
       header: "Hiring/Asset Name",
       cell: (info) => info.getValue() || "-",
     }),
-    columnHelper.accessor((row) => row?.formData.qty, {
+    columnHelper.accessor((row) => row?.formData?.qty, {
       id: "quantity",
       header: "Quantity",
       cell: (info) => info.getValue() || "-",
     }),
-    columnHelper.accessor((row) => row?.formData.status, {
+    columnHelper.accessor((row) => row?.formData?.status, {
       id: "status",
       header: "Status",
       cell: (info) => {
@@ -793,7 +811,7 @@ const Dashboard = () => {
                     <div className="flex items-center justify-center gap-4">
                       <Link
                         className="px-2 py-1 bg-blue-500 text-white rounded inline-flex justify-center items-center gap-2 hover:bg-blue-600 cursor-pointer"
-                        to={`/receipts/${row.original?.formData.id}`}
+                        to={`/receipts/${row.original?.formData?.id}`}
                         onClick={() =>
                           row.original.formData.type == "hiring"
                             ? resetasset()
@@ -835,7 +853,7 @@ const Dashboard = () => {
                   </td>
                   <td className="border-gray-300 border-b px-4 py-2 text-sm text-gray-700 text-center">
                     {new Date(
-                      row.original.formData.created_at
+                      row.original.formData?.created_at
                     ).toLocaleDateString("en-GB", {
                       day: "2-digit",
                       month: "short",
