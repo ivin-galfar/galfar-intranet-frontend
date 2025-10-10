@@ -194,7 +194,7 @@ const Dashboard = () => {
         "Content-type": "application/json",
         "Access-Control-Allow-Origin": "*",
       };
-      const response = await axios.delete(
+      const response = await axios.post(
         `${REACT_SERVER_URL}/receipts/${mr}`,
         config
       );
