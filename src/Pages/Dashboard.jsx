@@ -9,7 +9,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { AppContext } from "../Components/Context";
 import fetchStatments from "../APIs/StatementsApi";
 import useUserInfo from "../CustomHooks/useUserInfo";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaArrowAltCircleRight, FaTrash } from "react-icons/fa";
 import Alerts from "../Components/Alerts";
 import { REACT_SERVER_URL } from "../../config/ENV";
@@ -127,15 +127,11 @@ const Dashboard = () => {
     fetchReceipts();
   }, [deleted]);
   useEffect(() => {
-    if (
-      !Array.isArray(allreceipts) ||
-      allreceipts.length === 0 ||
-      approversFetched
-    )
-      return;
-    const fetchApproverscomments = async () => {
+    if (!Array.isArray(allreceipts) || allreceipts.length === 0) return;
+
+    const fetchApproversComments = async () => {
       try {
-        const enrichedReceipts = await Promise.all(
+        const settledResults = await Promise.allSettled(
           allreceipts.map(async (receipt) => {
             if (receipt?.formData?.comments_count > 0) {
               try {
@@ -161,10 +157,26 @@ const Dashboard = () => {
                   `Error fetching approver for ${receipt.formData.id}`,
                   err
                 );
-                return receipt;
+                return {
+                  ...receipt,
+                  formData: { ...receipt.formData, approverdetails: [] },
+                };
               }
             }
+            return {
+              ...receipt,
+              formData: { ...receipt.formData, approverdetails: [] },
+            };
           })
+        );
+
+        const enrichedReceipts = settledResults.map((res, i) =>
+          res.status === "fulfilled"
+            ? res.value
+            : {
+                ...allreceipts[i],
+                formData: { ...allreceipts[i].formData, approverdetails: [] },
+              }
         );
         setAllReceipts(enrichedReceipts);
         setReceipts((prevReceipts) =>
@@ -172,28 +184,24 @@ const Dashboard = () => {
             const enriched = enrichedReceipts.find(
               (er) => er?.formData?.id === r?.formData?.id
             );
-            if (!enriched) return r;
-
             return {
               ...r,
               formData: {
                 ...r.formData,
-                approverdetails: enriched.formData.approverdetails || [],
+                approverdetails: enriched?.formData?.approverdetails || [],
               },
             };
           })
         );
 
         setApproverDetails(enrichedReceipts);
-
-        setApproversFetched(true);
       } catch (err) {
         console.error("Error enriching receipts:", err);
       }
     };
 
-    fetchApproverscomments();
-  }, [allreceipts, receipts, statusFilter, approversFetched]);
+    fetchApproversComments();
+  }, [allreceipts, statusFilter, statusFilter, approversFetched]);
 
   const handleDelete = async (mr) => {
     try {
@@ -206,6 +214,7 @@ const Dashboard = () => {
       };
       const response = await axios.post(
         `${REACT_SERVER_URL}/receipts/${mr}`,
+        {},
         config
       );
       setShowToast(true);

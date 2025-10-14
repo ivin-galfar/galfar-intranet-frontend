@@ -84,6 +84,7 @@ const ApproveModal = ({ setShowmodal, cs_id }) => {
             currency: "",
             qty: "",
             file: [],
+            filename: [],
           },
           tableData: [],
         });

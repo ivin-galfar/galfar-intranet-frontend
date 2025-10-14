@@ -58,7 +58,8 @@ const TableHeader = ({ isAdmin }) => {
   const { setClearTable } = useClearStatementTable();
   const { deleted, resetDeleted, setDeleted } = useDeleteStatement();
 
-  const Asset = userInfo.role == "InitA" ? true : false;
+  const Asset =
+    userInfo.role == "InitA" || formData.type == "asset" ? true : false;
 
   useEffect(() => {
     const loadParticulars = async () => {
@@ -242,6 +243,7 @@ const TableHeader = ({ isAdmin }) => {
         formData,
         config
       );
+
       const newFiles = response.data.uploadedFiles.map((file) => file.fileUrl);
       const newFileNames = response.data.uploadedFiles.map(
         (file) => file.fileName
@@ -273,6 +275,7 @@ const TableHeader = ({ isAdmin }) => {
       };
       const response = await axios.post(
         `${REACT_SERVER_URL}/receipts/${mr}`,
+        {},
         config
       );
       setShowToast(true);
@@ -312,6 +315,7 @@ const TableHeader = ({ isAdmin }) => {
                   projectvalue: "",
                   requirementdurationvalue: "",
                   file: [],
+                  filename: [],
                   qty: "",
                   currency: "",
                   requireddatevalue: new Date(),
@@ -416,8 +420,12 @@ const TableHeader = ({ isAdmin }) => {
                   type="file"
                   multiple
                   accept="image/*"
-                  className="hidden"
+                  className={`hidden ${sharedTableData.formData?.created_at != null ? "cursor-not-allowed" : "cursor-pointer"}`}
                   onChange={handleFileUpload}
+                  disabled={
+                    sharedTableData.formData?.created_at != null &&
+                    sharedTableData.formData?.status != "review"
+                  }
                   // disabled={sharedTableData.formData?.file?.length > 0}
                 />
               </label>

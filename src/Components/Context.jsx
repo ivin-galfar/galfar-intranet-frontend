@@ -22,6 +22,7 @@ const AppContextProvider = ({ children }) => {
       receiptupdated: null,
       type: userInfo?.role == "InitA" ? "asset" : "hiring",
       file: [],
+      filename: [],
     },
     tableData: initialTableData,
   });
