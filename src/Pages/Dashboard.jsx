@@ -208,7 +208,7 @@ const Dashboard = () => {
     };
 
     fetchApproversComments();
-  }, [allreceipts, statusFilter, userInfo]);
+  }, [statusFilter, userInfo, approversFetched]);
 
   const handleDelete = async (mr) => {
     try {
