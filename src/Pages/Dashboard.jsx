@@ -130,10 +130,11 @@ const Dashboard = () => {
     if (!Array.isArray(allreceipts) || allreceipts.length === 0) return;
     if (!userInfo?.token) return;
 
-    const needsEnrichment = allreceipts.some(
-      (r) =>
-        !r.formData?.approverdetails || r.formData.approverdetails.length === 0
-    );
+    const needsEnrichment = allreceipts.some((r) => {
+      const details = r.formData?.approverdetails;
+      return !Array.isArray(details) || details.length === 0;
+    });
+
     if (!needsEnrichment) return;
 
     const fetchApproversComments = async () => {
@@ -208,7 +209,12 @@ const Dashboard = () => {
     };
 
     fetchApproversComments();
-  }, [statusFilter, userInfo, approversFetched]);
+  }, [
+    statusFilter,
+    userInfo,
+    approversFetched,
+    !approversFetched ? allreceipts : "",
+  ]);
 
   const handleDelete = async (mr) => {
     try {
