@@ -63,7 +63,7 @@ const TableHeader = ({ isAdmin }) => {
   useEffect(() => {
     const loadParticulars = async () => {
       try {
-        const particulars = await fetchParticulars();
+        const particulars = await fetchParticulars(userInfo);
         setParticulars(particulars.Particulars);
         setfreezeQuantity(false);
       } catch (error) {
@@ -72,8 +72,6 @@ const TableHeader = ({ isAdmin }) => {
     };
     loadParticulars();
   }, []);
-
-  console.log(sharedTableData);
 
   useEffect(() => {
     if (userInfo?.is_admin) {
@@ -127,8 +125,11 @@ const TableHeader = ({ isAdmin }) => {
     if (id && id != "default") {
       try {
         const config = {
-          "Content-type": "application/json",
-          "Access-Control-Allow-Origin": "*",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${userInfo.token}`,
+          },
         };
         const response = await axios.get(
           `${REACT_SERVER_URL}/receipts/${receiptid}`,
@@ -231,15 +232,26 @@ const TableHeader = ({ isAdmin }) => {
       files.forEach((file) => {
         formData.append("file", file);
       });
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
       const response = await axios.post(
         `${REACT_SERVER_URL}/receipts/file`,
-        formData
+        formData,
+        config
+      );
+      const newFiles = response.data.uploadedFiles.map((file) => file.fileUrl);
+      const newFileNames = response.data.uploadedFiles.map(
+        (file) => file.fileName
       );
       setSharedTableData((prev) => ({
         ...prev,
         formData: {
           ...prev.formData,
-          file: response.data.uploadedFiles.map((file) => file.fileUrl),
+          file: [...(prev.formData.file || []), ...newFiles],
+          filename: [...(prev.formData.filename || []), ...newFileNames],
         },
       }));
     } catch (error) {
@@ -253,8 +265,11 @@ const TableHeader = ({ isAdmin }) => {
   const handleDelete = async (mr) => {
     try {
       const config = {
-        "Content-type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
       };
       const response = await axios.post(
         `${REACT_SERVER_URL}/receipts/${mr}`,
@@ -385,7 +400,7 @@ const TableHeader = ({ isAdmin }) => {
             <div className="flex items-center gap-2">
               <label
                 htmlFor="receiptfile"
-                className={`flex items-center gap-2 text-sm bg-blue-100 text-blue-700 px-4 py-2 rounded-lg ${sharedTableData.formData?.file?.length > 0 ? "cursor-auto" : "cursor-pointer"} hover:bg-blue-200 transition-all`}
+                className={`flex items-center gap-2 text-sm bg-blue-100 text-blue-700 px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-200 transition-all`}
               >
                 Upload File
                 <FaFileUpload size={20} />
@@ -403,7 +418,7 @@ const TableHeader = ({ isAdmin }) => {
                   accept="image/*"
                   className="hidden"
                   onChange={handleFileUpload}
-                  disabled={sharedTableData.formData?.file?.length > 0}
+                  // disabled={sharedTableData.formData?.file?.length > 0}
                 />
               </label>
             </div>

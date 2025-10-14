@@ -33,10 +33,12 @@ export const registerUser = async ({ email, password }) => {
   return data;
 };
 
-export const feedReceipt = async ({ sharedTableData }) => {
+export const feedReceipt = async ({ sharedTableData, userInfo }) => {
   const config = {
-    "Content-type": "application/json",
-    "Access-Control-Allow-Origin": "*",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userInfo.token}`,
+    },
   };
   const { data } = await axios.post(
     `${REACT_SERVER_URL}/receipts`,
@@ -53,10 +55,13 @@ export const updateReceipt = async ({
   sharedTableData,
   selectedvendorindex,
   selectedvendorreason,
+  userInfo,
 }) => {
   const config = {
-    "Content-type": "application/json",
-    "Access-Control-Allow-Origin": "*",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userInfo.token}`,
+    },
   };
 
   const { data } = await axios.put(

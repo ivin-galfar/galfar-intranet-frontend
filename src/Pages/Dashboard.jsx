@@ -139,8 +139,15 @@ const Dashboard = () => {
           allreceipts.map(async (receipt) => {
             if (receipt?.formData?.comments_count > 0) {
               try {
+                const config = {
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${userInfo.token}`,
+                  },
+                };
                 const res = await axios.get(
-                  `${REACT_SERVER_URL}/receipts/approverdetails/${receipt.formData.id}`
+                  `${REACT_SERVER_URL}/receipts/approverdetails/${receipt.formData.id}`,
+                  config
                 );
                 return {
                   ...receipt,
@@ -191,8 +198,11 @@ const Dashboard = () => {
   const handleDelete = async (mr) => {
     try {
       const config = {
-        "Content-type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
       };
       const response = await axios.post(
         `${REACT_SERVER_URL}/receipts/${mr}`,

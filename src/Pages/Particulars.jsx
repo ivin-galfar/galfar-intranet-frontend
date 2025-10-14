@@ -18,6 +18,7 @@ import axios from "axios";
 import { REACT_SERVER_URL } from "../../config/ENV";
 import Alerts from "../Components/Alerts";
 import { useStatementupdated } from "../store/statementStore";
+import useUserInfo from "../CustomHooks/useUserInfo";
 
 const Particulars = () => {
   const { particulars, setParticulars } = useContext(AppContext);
@@ -29,11 +30,12 @@ const Particulars = () => {
 
   const { showupdated, setshowupdated, resetshowupdated } =
     useStatementupdated();
+  const userInfo = useUserInfo();
 
   useEffect(() => {
     const loadParticulars = async () => {
       try {
-        const particulars = await fetchParticulars();
+        const particulars = await fetchParticulars(userInfo);
         setParticulars(particulars.Particulars);
       } catch (error) {}
     };
@@ -99,8 +101,11 @@ const Particulars = () => {
     resetshowupdated();
     try {
       const config = {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
       };
       const { data } = await axios.delete(
         `${REACT_SERVER_URL}/particulars/${deletetemplate}`,

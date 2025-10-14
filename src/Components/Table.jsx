@@ -44,8 +44,16 @@ export default function VerticalTable({ showcalc }) {
 
   const fetchParticular = async (particularname) => {
     try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
       const response = await axios.get(
-        `${REACT_SERVER_URL}/particulars/${particularname}`
+        `${REACT_SERVER_URL}/particulars/${particularname}`,
+        config
       );
       setParticular(response.data.particular.particulars);
     } catch (error) {

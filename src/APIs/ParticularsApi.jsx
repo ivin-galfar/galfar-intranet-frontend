@@ -1,11 +1,14 @@
 import axios from "axios";
 import { REACT_SERVER_URL } from "../../config/ENV";
 
-const fetchParticulars = async () => {
+const fetchParticulars = async (userInfo) => {
   try {
     const config = {
-      "Content-type": "application/json",
-      "Access-Control-Allow-Origin": "*",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
     };
     const response = await axios.get(`${REACT_SERVER_URL}/particulars`, config);
     return response.data;

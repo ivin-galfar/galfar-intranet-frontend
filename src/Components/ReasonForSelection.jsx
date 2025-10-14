@@ -24,18 +24,28 @@ const ReasonForSelection = ({
   };
 
   const reqApproval = async (cs_id) => {
-    const effectiveId =
-      cs_id ??
-      (await axios.get(`${REACT_SERVER_URL}/receipts`)).data.receipts.slice(
-        -1
-      )[0]?.formData.id;
+    let effectiveId = cs_id;
 
     if (!effectiveId) {
-      setErrormessage("No statement found to request approval!");
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 2000);
-      return;
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        };
+
+        const response = await axios.get(
+          `${REACT_SERVER_URL}/receipts`,
+          config
+        );
+        const receipts = response.data?.receipts || [];
+        const lastReceipt = receipts.at(-1); // cleaner than slice(-1)[0]
+        effectiveId = lastReceipt?.formData?.id;
+      } catch (error) {
+        console.error("Failed to fetch receipts:", error);
+      }
     }
+
     const recommendationRow = sharedTableData.tableData.find(
       (row) => row.particulars === "Recommendation (If Any)"
     );
@@ -48,13 +58,20 @@ const ReasonForSelection = ({
         ) || "";
     }
     try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
       const response = await axios.put(
         `${REACT_SERVER_URL}/receipts/updatereceiptstatus/${effectiveId}`,
         {
           selectedVendorIndex: selectedVendorIndex,
           selectedVendorReason: selectedRecommendation,
           status: statusMap[userInfo.role] || "Pending For HOD",
-        }
+        },
+        config
       );
 
       setreqApprovalstatus(response.data.formData.sentforapproval);

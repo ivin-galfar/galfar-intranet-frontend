@@ -46,8 +46,10 @@ const ApproveModal = ({ setShowmodal, cs_id }) => {
 
     try {
       const config = {
-        "Content-type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
       };
       const response = await axios.put(
         `${REACT_SERVER_URL}/receipts/approver/${cs_id}`,

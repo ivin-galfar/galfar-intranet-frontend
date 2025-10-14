@@ -145,12 +145,13 @@ const Receipts = () => {
       return;
     }
     if (!isReview) {
-      ReceiptMutation.mutate({ sharedTableData });
+      ReceiptMutation.mutate({ sharedTableData, userInfo });
     } else {
       updateReceiptMutation.mutate({
         sharedTableData,
         selectedVendorIndex,
         selectedVendorReason,
+        userInfo,
       });
     }
   };

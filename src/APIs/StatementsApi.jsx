@@ -4,8 +4,11 @@ import { REACT_SERVER_URL } from "../../config/ENV";
 const fetchStatments = async ({ expectedStatuses, userInfo }) => {
   try {
     const config = {
-      "Content-type": "application/json",
-      "Access-Control-Allow-Origin": "*",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
     };
     const response = await axios.get(`${REACT_SERVER_URL}/receipts`, config);
 

@@ -33,8 +33,11 @@ const AddParticularsModal = ({ setShowmodal }) => {
     e.preventDefault();
     try {
       const config = {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
       };
       const { data } = await axios.post(
         `${REACT_SERVER_URL}/particulars`,
