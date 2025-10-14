@@ -128,6 +128,13 @@ const Dashboard = () => {
   }, [deleted]);
   useEffect(() => {
     if (!Array.isArray(allreceipts) || allreceipts.length === 0) return;
+    if (!userInfo?.token) return;
+
+    const needsEnrichment = allreceipts.some(
+      (r) =>
+        !r.formData?.approverdetails || r.formData.approverdetails.length === 0
+    );
+    if (!needsEnrichment) return;
 
     const fetchApproversComments = async () => {
       try {
@@ -193,15 +200,15 @@ const Dashboard = () => {
             };
           })
         );
-
         setApproverDetails(enrichedReceipts);
+        setApproversFetched(true);
       } catch (err) {
         console.error("Error enriching receipts:", err);
       }
     };
 
     fetchApproversComments();
-  }, [allreceipts, statusFilter, statusFilter, approversFetched]);
+  }, [allreceipts, statusFilter, userInfo]);
 
   const handleDelete = async (mr) => {
     try {
