@@ -431,20 +431,20 @@ const Dashboard = () => {
           styles: { fontStyle: "bold" },
         },
         ...activeVendorIndexes.map((_, idx) => ({
-          content: idx === formData.selectedVendorIndex ? "Yes" : "--",
+          content: idx === formData.selectedvendorindex ? "Yes" : "--",
           styles: {
-            fontStyle: idx === formData.selectedVendorIndex ? "bold" : "normal",
+            fontStyle: idx === formData.selectedvendorindex ? "bold" : "normal",
             textColor:
-              idx === formData.selectedVendorIndex ? [0, 128, 0] : [0, 0, 0],
-            fontSize: idx === formData.selectedVendorIndex ? 9 : 8,
+              idx === formData.selectedvendorindex ? [0, 128, 0] : [0, 0, 0],
+            fontSize: idx === formData.selectedvendorindex ? 9 : 8,
           },
         })),
       ],
       [
         "Recommendation",
         ...activeVendorIndexes.map((_, idx) =>
-          idx == formData.selectedVendorIndex
-            ? formData.selectedVendorReason
+          idx == formData.selectedvendorindex
+            ? formData.selectedvendorreason
             : "--"
         ),
       ]
