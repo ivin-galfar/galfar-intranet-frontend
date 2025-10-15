@@ -385,7 +385,7 @@ const TableHeader = ({ isAdmin }) => {
           </div>
         </div>
         <div className="flex-1 flex justify-center mr-35">
-          <h2 className="text-xl font-medium uppercase text-center p-2">
+          <h2 className="text-xl font-medium uppercase text-center p-2 ml-25">
             GALFAR ENGINEERING & CONTRACTING WLL EMIRATES
           </h2>
         </div>
@@ -579,7 +579,7 @@ const TableHeader = ({ isAdmin }) => {
           </div>
         </div>
 
-        <div className="flex items-center justify-center text-sm font-medium w-1/2 ml-0 lg:ml-24">
+        <div className="flex items-center justify-center text-sm font-medium w-1/2 ml-0 ">
           {isAdmin ? (
             <>
               <span>
@@ -597,7 +597,7 @@ const TableHeader = ({ isAdmin }) => {
             </>
           ) : (
             <p className="text-sm font-medium">
-              {formData?.projectvalue ? "HIRING -" : "Asset - "}
+              {formData?.projectvalue ? "Hiring -" : "Asset - "}
               <span className="font-medium">{formData?.hiringname ?? ""}</span>
             </p>
           )}
@@ -624,7 +624,7 @@ const TableHeader = ({ isAdmin }) => {
         <div className="flex justify-between mt-4 px-4">
           <div className="flex flex-col space-y-1 text-left w-1/3">
             <p>
-              <span className="font-medium">PROJECT:</span>{" "}
+              <span className="font-medium">Project:</span>{" "}
               {isAdmin ? (
                 <input
                   type="text"
@@ -655,7 +655,7 @@ const TableHeader = ({ isAdmin }) => {
 
           <div className="flex flex-col space-y-1 text-center w-1/3">
             <p>
-              <span className="font-medium">EQUIP MR NO:</span>{" "}
+              <span className="font-medium">Equip Mr No:</span>{" "}
               {isAdmin ? (
                 <input
                   type="text"
@@ -668,7 +668,7 @@ const TableHeader = ({ isAdmin }) => {
               )}
             </p>
             <p>
-              <span className="font-medium">EM REF NO:</span>{" "}
+              <span className="font-medium">Em Ref No:</span>{" "}
               {isAdmin ? (
                 <input
                   type="text"
@@ -685,7 +685,7 @@ const TableHeader = ({ isAdmin }) => {
           <div className="flex flex-col space-y-2 text-sm w-1/3">
             <div className="flex items-center justify-between">
               <label className="font-medium whitespace-nowrap mr-2 ml-50">
-                REQUIRED DATE:
+                Required Date:
               </label>
               {isAdmin ? (
                 <input
@@ -713,7 +713,7 @@ const TableHeader = ({ isAdmin }) => {
 
             <div className="flex items-center justify-between">
               <label className="font-medium whitespace-nowrap mr-2 ml-50">
-                REQUIREMENT DURATIONS:
+                Requirement Durations:
               </label>
               {isAdmin ? (
                 <input
