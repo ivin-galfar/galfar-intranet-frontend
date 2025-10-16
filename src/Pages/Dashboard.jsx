@@ -681,6 +681,7 @@ const Dashboard = () => {
       (row) => {
         const commentsArray = row?.formData?.approverdetails?.approverDetails
           ?.filter((item) => item.comments && item.comments.trim() !== "{}")
+          ?.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
           .map((item) => `${item.role}: ${item.comments}`);
 
         return commentsArray?.length ? commentsArray.join("\n") : "-";

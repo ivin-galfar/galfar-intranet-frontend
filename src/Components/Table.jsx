@@ -110,6 +110,7 @@ export default function VerticalTable({ showcalc }) {
       "NOTE",
       "VENDOR NAME",
       "NAME",
+      "ICV SCORE",
     ];
     return skipLabels.includes(particulars?.trim().toUpperCase());
   };

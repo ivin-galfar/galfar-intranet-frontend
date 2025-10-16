@@ -19,7 +19,6 @@ const ApproveModal = ({ setShowmodal, cs_id }) => {
   const {
     setSharedTableData,
     sharedTableData,
-
     setIsMRSelected,
     setSelectedMr,
   } = useContext(AppContext);
@@ -51,7 +50,7 @@ const ApproveModal = ({ setShowmodal, cs_id }) => {
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      const response = await axios.put(
+      await axios.put(
         `${REACT_SERVER_URL}/receipts/approver/${cs_id}`,
         {
           userId: userInfo.id,
@@ -64,6 +63,14 @@ const ApproveModal = ({ setShowmodal, cs_id }) => {
         },
         config
       );
+      setErrormessage("");
+      setShowToast(true);
+      setTimeout(() => {
+        setShowToast(false);
+      }, 1500);
+      setTimeout(() => {
+        setShowmodal(false);
+      }, 1500);
       setLastAction(finalStatus);
       if (finalStatus === "review") {
         resetSortVendors();
@@ -111,14 +118,20 @@ const ApproveModal = ({ setShowmodal, cs_id }) => {
         }));
       }
 
-      setErrormessage("");
-      setShowToast(true);
-      setTimeout(() => {
-        setShowToast(false);
-      }, 1500);
-      setTimeout(() => {
-        setShowmodal(false);
-      }, 1500);
+      axios
+        .post(
+          `${REACT_SERVER_URL}/emailnotify/${cs_id}`,
+          {
+            userInfo,
+            formData: sharedTableData.formData,
+            status: finalStatus,
+          },
+          config
+        )
+        .then((res) => console.log("✅ Email sent:", res.data.emailInfo))
+        .catch((err) =>
+          console.error("❌ Email send failed:", err.response.data.message)
+        );
     } catch (error) {
       let message = error?.response?.data?.message;
       setErrormessage(message ? message : error.message);

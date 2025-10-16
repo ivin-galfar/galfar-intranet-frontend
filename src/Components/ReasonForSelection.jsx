@@ -73,6 +73,20 @@ const ReasonForSelection = ({
         },
         config
       );
+      axios
+        .post(
+          `${REACT_SERVER_URL}/emailnotify/${cs_id}`,
+          {
+            userInfo,
+            formData: sharedTableData.formData,
+            status: statusMap[userInfo.role] || "Pending For HOD",
+          },
+          config
+        )
+        .then((res) => console.log("✅ Email sent:", res.data.emailInfo))
+        .catch((err) =>
+          console.error("❌ Email send failed:", err.response.data.message)
+        );
 
       setreqApprovalstatus(response.data.formData.sentforapproval);
       setErrormessage("");
