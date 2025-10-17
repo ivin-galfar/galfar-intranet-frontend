@@ -38,7 +38,9 @@ export default function VerticalTable({ showcalc }) {
   const { sortvendors } = useSortVendors();
 
   useEffect(() => {
-    setSelectedVendorIndex(sharedTableData.formData.selectedvendorindex ?? 0);
+    if (sharedTableData.formData.sentforapproval !== "pending") {
+      setSelectedVendorIndex(sharedTableData.formData.selectedvendorindex ?? 0);
+    }
   }, [sharedTableData.formData.selectedvendorindex, selectedmr]);
   const currencysymbol = Currency(sharedTableData.formData.currency || "");
 
@@ -368,6 +370,11 @@ export default function VerticalTable({ showcalc }) {
     .filter((item) => item.value > 0)
     .sort((a, b) => a.value - b.value)
     .map((item, rank) => ({ ...item, rank: rank + 1 }));
+  const l1Vendor = ranks.find((r) => r.rank === 1);
+  const l1Index = l1Vendor ? l1Vendor.index : null;
+  if (l1Index !== null && sharedTableData.formData.sentforapproval == null) {
+    setSelectedVendorIndex(l1Index);
+  }
 
   return (
     <div className="overflow-x-auto w-full">
@@ -597,7 +604,7 @@ export default function VerticalTable({ showcalc }) {
                         {selectedVendorIndex === index ? (
                           <span className="flex  items-center ">
                             <>Selected </>
-                            {sharedTableData.formData.selectedVendorReason && (
+                            {sharedTableData.formData.selectedvendorreason && (
                               <>
                                 <IoMdInformationCircleOutline
                                   className="pl-2 "

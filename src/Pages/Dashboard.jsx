@@ -466,9 +466,9 @@ const Dashboard = () => {
     const spacing = 10;
 
     const roleDisplayMap = {
-      HOD: "Head of the Department",
-      GM: "General Manager",
-      CEO: "Chief Executive Officer",
+      HOD: "HOD - Mr.Pramoj.R",
+      GM: "GM - Mr.Vijayan.C",
+      CEO: "CEO - Mr.Sridhar. C",
     };
     const approvalsStatus =
       formData?.approverdetails?.approverDetails?.reduce((acc, d) => {
@@ -527,12 +527,18 @@ const Dashboard = () => {
     const footerPadding = 6;
     const pageCount = doc.internal.getNumberOfPages();
     const pageHeight = doc.internal.pageSize.height;
-
+    const extraSpacing = 10;
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
       doc.setFontSize(9);
       doc.setFont("helvetica", "normal");
       doc.setTextColor(100);
+
+      doc.text(
+        `System Generated Comparative Statement `,
+        14,
+        pageHeight - footerPadding - extraSpacing
+      );
 
       doc.text(
         `Generated on: ${new Date().toLocaleString()}`,
