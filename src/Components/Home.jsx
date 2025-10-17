@@ -143,11 +143,11 @@ const Home = () => {
   });
 
   return (
-    <div className="flex flex-col min-h-screen h-40 relative">
+    <div className="flex flex-col min-h-screen h-50 relative">
       <img
         src={galfarlogo || ""}
         alt="Galfar Logo"
-        className="w-full  object-cover  h-full sticky"
+        className="w-full object-cover h-72 md:h-96 lg:h-[28rem]"
       />
       <div className="flex gap-6 ml-10 mt-5">
         <div className="w-1/3 p-4 bg-white rounded-lg shadow-md border border-gray-200">
