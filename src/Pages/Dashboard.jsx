@@ -466,9 +466,9 @@ const Dashboard = () => {
     const spacing = 10;
 
     const roleDisplayMap = {
-      HOD: "HOD - Mr.Pramoj.R",
-      GM: "GM - Mr.Vijayan.C",
-      CEO: "CEO - Mr.Sridhar. C",
+      HOD: "Mr.Pramoj.R",
+      GM: "Mr.Vijayan.C",
+      CEO: "Mr.Sridhar. C",
     };
     const approvalsStatus =
       formData?.approverdetails?.approverDetails?.reduce((acc, d) => {
@@ -484,7 +484,8 @@ const Dashboard = () => {
           : approvalsStatus[dbRole] || "--";
       const status =
         rawStatus.charAt(0).toUpperCase() + rawStatus.slice(1).toLowerCase();
-      const displayRole = roleDisplayMap[dbRole] || dbRole;
+      const displayName = roleDisplayMap[dbRole] || dbRole;
+      const displayRole = `(${dbRole})`;
 
       const labelX = 20 + index * (labelWidth + spacing);
       const labelY = startYLabel + 25;
@@ -500,7 +501,7 @@ const Dashboard = () => {
 
       const offsetY = 10;
       const statusWidth = doc.getTextWidth(status);
-      const roleWidth = doc.getTextWidth(displayRole);
+      const roleWidth = doc.getTextWidth(displayName);
 
       const lineWidth = Math.max(statusWidth, roleWidth);
 
@@ -521,7 +522,8 @@ const Dashboard = () => {
       doc.setFont("helvetica", "bold");
       doc.setFontSize(9);
       doc.setTextColor(0, 0, 0);
-      doc.text(displayRole, roleX, labelY + offsetY + 6);
+      doc.text(displayName, roleX, labelY + offsetY + 6);
+      doc.text(displayRole, roleX + 5, labelY + offsetY + 12);
     });
 
     const footerPadding = 6;
@@ -881,9 +883,11 @@ const Dashboard = () => {
                         }}
                       />
                       <FaTrash
-                        className={`mr-1 text-red-500 ${!userInfo?.is_admin ? "hidden" : "cursor-pointer"}`}
+                        className={`mr-1 text-red-500  ${!userInfo?.is_admin ? "hidden" : row.original.formData.status === "Approved" ? "cursor-not-allowed  opacity-50 scale-95" : "cursor-pointer"} `}
                         size={16}
                         onClick={() => {
+                          if (row.original.formData.status === "Approved")
+                            return;
                           setdeleteMr(row.original.formData.id);
                           setTriggerdelete(true);
                         }}
