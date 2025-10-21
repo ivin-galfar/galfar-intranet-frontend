@@ -697,6 +697,7 @@ const Dashboard = () => {
       {
         id: "comments",
         header: "Comments",
+        meta: { className: "w-80 max-w-xs whitespace-pre-wrap break-words" },
         cell: (info) => (
           <span className="whitespace-pre-wrap">{info.getValue() || "-"}</span>
         ),
@@ -840,7 +841,7 @@ const Dashboard = () => {
                   {row.getVisibleCells().map((cell) => (
                     <td
                       key={cell.id}
-                      className="border-b border-gray-300 px-4 py-2 text-sm text-gray-700"
+                      className={`border-b  border-gray-300 px-4 py-2 text-sm text-gray-700 ${cell.column.columnDef.meta?.className}`}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
