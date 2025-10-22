@@ -11,7 +11,6 @@ import { FiMenu } from "react-icons/fi";
 import { AiFillCaretUp } from "react-icons/ai";
 import { AiFillCaretDown } from "react-icons/ai";
 import { FaSignInAlt } from "react-icons/fa";
-import scaffolding from "../assets/Images/scaffolding.png";
 const SideNav = ({ isOpen, setIsMenuOpen, ref }) => {
   const { setStatusFilter, setMultiStatusFilter } = useContext(AppContext);
   const [submenuOpen, setSubmenuOpen] = useState(false);
@@ -112,14 +111,6 @@ const SideNav = ({ isOpen, setIsMenuOpen, ref }) => {
             </Link>
           </div>
         )}
-        <button className="flex items-center gap-2 p-2 rounded text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 cursor-pointer">
-          <img
-            src={scaffolding}
-            className="h-4 w-5 object-contain"
-            alt="Scaffolding Icon"
-          />
-          {isOpen && <span className="whitespace-nowrap">Scaffolding</span>}
-        </button>
 
         <button
           className="flex gap-2 p-2 rounded text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 cursor-pointer"
