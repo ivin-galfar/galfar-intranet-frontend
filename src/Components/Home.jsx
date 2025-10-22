@@ -71,7 +71,10 @@ const Home = () => {
   useEffect(() => {
     const loadParticulars = async () => {
       try {
-        const particulars = await fetchParticulars(userInfo);
+        const particulars = await fetchParticulars(
+          userInfo,
+          userInfo.dept_code[0]
+        );
         setParticulars(particulars.Particulars);
         setfreezeQuantity(false);
       } catch (error) {

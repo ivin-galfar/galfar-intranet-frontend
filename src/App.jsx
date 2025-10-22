@@ -10,6 +10,7 @@ import FloatingNotification from "./Components/FloatingNotification";
 import Dashboard from "./Pages/Dashboard";
 import Footer from "./Components/Footer";
 import Contact from "./Pages/Contact";
+import LogisticsStatement from "./Pages/LogisticsStatement";
 
 const App = () => {
   const location = useLocation();
@@ -32,7 +33,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route
-          path="/particulars"
+          path="/particulars/:dept_id"
           element={
             <ProtectedRoute>
               <Particulars />
@@ -45,6 +46,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <Receipts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/lstatements"
+          element={
+            <ProtectedRoute>
+              <LogisticsStatement />
             </ProtectedRoute>
           }
         />
